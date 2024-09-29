@@ -1,0 +1,26 @@
+import = [
+    "~/.config/alacritty/gruvbox-dark.toml"
+]
+
+live_config_reload = true
+
+[env]
+TERM = "xterm-256color"
+
+[window]
+option_as_alt = "Both"
+
+[font]
+size = 15.0
+
+[font.bold]
+family = "FiraMono Nerd Font Mono"
+
+[font.bold_italic]
+family = "FiraMono Nerd Font Mono"
+
+[font.italic]
+family = "FiraMono Nerd Font Mono"
+
+[font.normal]
+family = "FiraMono Nerd Font Mono"
