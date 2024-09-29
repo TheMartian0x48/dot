@@ -3,9 +3,12 @@ keybinds clear-defaults=true {
     normal {
         bind "Alt p" { SwitchToMode "Pane"; }
         bind "Alt t" { SwitchToMode "Tab"; }
+        bind "Alt f" { ToggleFocusFullscreen; }
     }
 
     pane {
+        // toggle fullscreen
+        bind "f" { ToggleFocusFullscreen; }
         // vim like motion to move between pane
         bind "h" { MoveFocus "Left"; }
         bind "j" { MoveFocus "Down"; }
@@ -19,7 +22,9 @@ keybinds clear-defaults=true {
         // renaming pane
         bind "t" { SwitchToMode "RenamePane"; PaneNameInput 0; }
         // exist to normal mode
-        bind "Enter" { SwitchToMode "Normal"; } 
+        bind "Enter" { SwitchToMode "Normal"; }
+        // go to resize mode
+        bind "s" { SwitchToMode "Resize"; }
     }
 
     renamepane {
@@ -42,6 +47,13 @@ keybinds clear-defaults=true {
     }
 
     renametab {
+        // exist to normal mode
+        bind "Enter" { SwitchToMode "Normal"; }
+    }
+
+    resize {
+        bind "+" { Resize "Increase"; }
+        bind "_" { Resize "Decrease"; }
         // exist to normal mode
         bind "Enter" { SwitchToMode "Normal"; }
     }
