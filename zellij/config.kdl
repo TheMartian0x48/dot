@@ -1,0 +1,93 @@
+keybinds clear-defaults=true {
+
+    normal {
+        bind "Alt p" { SwitchToMode "Pane"; }
+        bind "Alt t" { SwitchToMode "Tab"; }
+    }
+
+    pane {
+        // vim like motion to mode between pane
+        bind "h" { MoveFocus "Left"; }
+        bind "j" { MoveFocus "Down"; }
+        bind "k" { MoveFocus "Up"; }
+        bind "l" { MoveFocus "Right"; }
+        // exist pane mode
+        bind "Esc" { SwitchToMode "Normal"; }
+        // create pane down and right
+        bind "d" { NewPane "Down"; SwitchToMode "Normal"; }
+        bind "r" { NewPane "Right"; SwitchToMode "Normal"; }
+        // renaming pane
+        bind "t" { SwitchToMode "RenamePane"; PaneNameInput 0; }
+        // exist to normal mode
+        bind "Enter" { SwitchToMode "Normal"; } 
+    }
+
+    renamepane {
+        // exist to normal mode
+        bind "Enter" { SwitchToMode "Normal"; }
+    }
+
+    tab {
+        // vim like motion to mode between tab 
+        bind "j" { GoToNextTab; }
+        bind "k" { GoToPreviousTab; }
+        // exist pane mode
+        bind "Esc" { SwitchToMode "Normal"; }
+        // create pane down and right
+        bind "n" { NewTab; SwitchToMode "Normal"; }
+        // renaming pane
+        bind "t" { SwitchToMode "RenameTab"; TabNameInput 0; }
+        // exist to normal mode
+        bind "Enter" { SwitchToMode "Normal"; } 
+    }
+
+    renametab {
+        // exist to normal mode
+        bind "Enter" { SwitchToMode "Normal"; }
+    }
+}
+
+//
+
+pane_frames true
+default_layout "compact"
+
+themes {
+	// example of how to set a theme in RGB format
+ 	gruvbox-light {
+ 		fg 60 56 54
+        bg 251 82 75
+        black 40 40 40
+        red 205 75 69
+        green 152 151 26
+        yellow 215 153 33
+        blue 69 133 136
+        magenta 177 98 134
+        cyan 104 157 106
+        white 213 196 161
+        orange 214 93 14
+ 	}
+
+ 	// example of how to set a theme in HEX format
+ 	gruvbox-dark {
+ 		fg "#D5C4A1"
+ 		bg "#282828"
+ 		black "#3C3836"
+ 		red "#CC241D"
+ 		green "#98971A"
+ 		yellow "#D79921"
+ 		blue "#3C8588"
+ 		magenta "#B16286"
+ 		cyan "#689D6A"
+ 		white "#FBF1C7"
+ 		orange "#D65D0E"
+ 	}
+}
+theme "gruvbox-dark"
+
+ui {
+    pane_frames {
+        rounded_corners true
+    }
+}
+
