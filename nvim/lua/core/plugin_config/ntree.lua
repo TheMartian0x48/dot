@@ -8,7 +8,7 @@ vim.opt.termguicolors = true
 require("nvim-tree").setup({
     hijack_cursor=true,
     view = {
-        side="right",
+        side="left",
         number=true,
         relativenumber=true,
         centralize_selection=true,

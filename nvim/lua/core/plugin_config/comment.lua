@@ -3,22 +3,20 @@ require('Comment').setup({
     sticky = true,
     ignore = nil,
     toggler = {
-        line = 'kcc',
-        block = 'kcb',
+        line = 'gcc',
+        block = 'gbc',
     },
     opleader = {
-        line = 'kc',
-        block = 'kb',
+        line = 'gc',
+        block = 'bb',
     },
     extra = {
-        above = 'kcO',
-        below = 'kco',
-        eol = 'kcA',
+        above = 'gcO',
+        below = 'gco',
+        eol = 'gcA',
     },
     mappings = {
-        ---Operator-pending mapping; `gcc` `gbc` `gc[count]{motion}` `gb[count]{motion}`
         basic = true,
-        ---Extra mapping; `gco`, `gcO`, `gcA`
         extra = true,
     },
     pre_hook = nil,
