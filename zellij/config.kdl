@@ -6,7 +6,7 @@ keybinds clear-defaults=true {
     }
 
     pane {
-        // vim like motion to mode between pane
+        // vim like motion to move between pane
         bind "h" { MoveFocus "Left"; }
         bind "j" { MoveFocus "Down"; }
         bind "k" { MoveFocus "Up"; }
@@ -28,7 +28,7 @@ keybinds clear-defaults=true {
     }
 
     tab {
-        // vim like motion to mode between tab 
+        // vim like motion to move between tab 
         bind "j" { GoToNextTab; }
         bind "k" { GoToPreviousTab; }
         // exist pane mode
