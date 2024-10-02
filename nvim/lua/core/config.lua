@@ -45,6 +45,7 @@ vim.g.gruvbox_baby_background_color="dark";
 -- support of ftlh 
 vim.filetype.add({
     extension = {
-        ftlh = "html"
+        ftlh = "html",
+        jte = "html"
     }
 })
