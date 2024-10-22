@@ -1,23 +1,27 @@
+-- timeout
 vim.o.timeout = true
 vim.o.timeoutlen = 300
 
+-- number
 vim.opt.number = true
 vim.opt.relativenumber = true
 
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
+-- indent
+vim.opt.cursorline = true
 vim.opt.expandtab = true
+vim.opt.shiftwidth = 4
+vim.opt.smartindent = true
+vim.opt.softtabstop = 4
+vim.opt.tabstop = 4
 
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
-vim.opt.cursorline = true
-vim.opt.smartindent = true
-
-vim.opt.swapfile = false
+-- backup
 vim.opt.backup = false
+vim.opt.swapfile = false
 
+-- search
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
@@ -31,10 +35,12 @@ vim.opt.fillchars = {
     eob = " ",
     fold = " "
 }
-vim.opt.foldmethod = "indent"
+
+-- fold
+vim.g.markdown_folding = 1 -- enable markdown folding
 vim.opt.foldenable = false
 vim.opt.foldlevel = 99
-vim.g.markdown_folding = 1 -- enable markdown folding
+vim.opt.foldmethod = "indent"
 
 -- already present in status line
 vim.opt.showmode = false

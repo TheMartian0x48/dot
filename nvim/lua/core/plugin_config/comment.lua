@@ -8,7 +8,7 @@ require('Comment').setup({
     },
     opleader = {
         line = 'gc',
-        block = 'bb',
+        block = 'gb',
     },
     extra = {
         above = 'gcO',
