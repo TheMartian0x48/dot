@@ -6,8 +6,8 @@ vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
 
 local function centerFloat()
-	local win_width = 160
-	local win_height = 40
+	local win_width = 100
+	local win_height = 30
 
 	local screen_width = vim.api.nvim_get_option("columns")
 	local screen_height = vim.api.nvim_get_option("lines")

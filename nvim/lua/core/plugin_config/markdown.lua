@@ -1,8 +1,8 @@
-require('md-pdf').setup({
-ignore_viewer_state = true
+local peek = require("peek")
+peek.setup({
+	app = "Brave Browser",
+	theme = "light",
 })
-
--- setup mapping
-vim.keymap.set("n", "<Space>,", function()
-    require('md-pdf').convert_md_to_pdf()
-end)
+vim.api.nvim_create_user_command("PeekOpen", peek.open, {})
+vim.api.nvim_create_user_command("PeekClose", peek.close, {})
+-- require("markview").setup({})

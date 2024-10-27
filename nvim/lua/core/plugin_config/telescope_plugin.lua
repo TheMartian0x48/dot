@@ -22,13 +22,23 @@ require("telescope").setup({
 		},
 	},
 	pickers = {
-		-- Default configuration for builtin pickers goes here:
-		-- picker_name = {
-		--   picker_config_key = value,
-		--   ...
-		-- }
-		-- Now the picker_config_key will be applied every time you call this
-		-- builtin picker
+		buffers = {
+			previewer = false,
+			layout_strategy = "vertical",
+			layout_config = {
+				vertical = {
+					height = 0.6,
+					prompt_position = "top",
+					width = 0.6,
+				},
+			},
+			mappings = {
+				i = {
+					["<C-d>"] = "delete_buffer",
+				},
+			},
+			-- initial_mode = "normal",
+		},
 	},
 	extensions = {
 		-- Your extension configuration goes here:
