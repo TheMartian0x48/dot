@@ -15,9 +15,9 @@ require("telescope").setup({
 		layout_config = {
 			horizontal = {
 				prompt_position = "top",
-				preview_width = 0.6,
+				preview_width = 0.5,
 			},
-			width = 0.90,
+			width = 0.95,
 			height = 0.90,
 		},
 	},
@@ -32,6 +32,9 @@ require("telescope").setup({
 					width = 0.6,
 				},
 			},
+            path_display = {
+                "filename_first",
+            },
 			mappings = {
 				i = {
 					["<C-d>"] = "delete_buffer",
@@ -39,6 +42,12 @@ require("telescope").setup({
 			},
 			-- initial_mode = "normal",
 		},
+        find_files = {
+            path_display = { "filename_first" }
+        },
+        live_grep = {
+            path_display = { "filename_first" }
+        },
 	},
 	extensions = {
 		-- Your extension configuration goes here:

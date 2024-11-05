@@ -16,6 +16,11 @@ vim.keymap.set("n", "<C-k>",  "<C-w>k")
 vim.keymap.set("n", "<C-l>",  "<C-w>l")
 vim.keymap.set("n", "<C-h>",  "<C-w>h")
 
+-- vim.keymap.set("n", "<c-H>",  "<c-w><")
+-- vim.keymap.set("n", "<c-L>",  "<c-w>>")
+-- vim.keymap.set("n", "<c-J>",  "<c-w>-")
+-- vim.keymap.set("n", "<c-K>",  "<c-w>+")
+
 -- Buffer nav
 vim.keymap.set("n", "<leader>q", ":bp<CR>")
 vim.keymap.set("n", "<leader>w", ":bn<CR>")

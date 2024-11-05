@@ -120,11 +120,6 @@ require("lazy").setup({
 			"kylechui/nvim-surround",
 			version = "v2..3.0", -- Use for stability; omit to use `main` branch for the latest features
 			event = "VeryLazy",
-			config = function()
-				require("nvim-surround").setup({
-					-- Configuration here, or leave empty to use defaults
-				})
-			end,
 		},
 		{
 			"ThePrimeagen/harpoon",
@@ -144,6 +139,12 @@ require("lazy").setup({
 		{
 			"folke/trouble.nvim",
 			cmd = "Trouble",
+		},
+		{
+			"NeogitOrg/neogit",
+			dependencies = {
+				"sindrets/diffview.nvim",
+			},
 		},
 	},
 })

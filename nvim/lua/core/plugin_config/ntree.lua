@@ -36,7 +36,7 @@ end
 
 require("nvim-tree").setup({
 	disable_netrw = true,
-	hijack_cursor = true,
+	-- hijack_cursor = true,
 	update_focused_file = {
 		enable = true,
 		update_root = false,
@@ -46,11 +46,13 @@ require("nvim-tree").setup({
 		relativenumber = true,
 		centralize_selection = true,
 		preserve_window_proportions = true,
-		float = {
-			enable = true,
-			quit_on_focus_loss = true,
-			open_win_config = centerFloat,
-		},
+        side = "right",
+        width = 40,
+		-- float = {
+		-- 	enable = true,
+		-- 	quit_on_focus_loss = true,
+		-- 	open_win_config = centerFloat,
+		-- },
 	},
 	renderer = {
 		-- root_folder_label = false,

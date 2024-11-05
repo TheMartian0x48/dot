@@ -4,9 +4,8 @@ require("mason-lspconfig").setup({
         "lua_ls",
         "gradle_ls",
         "jdtls",
-        "cssls",
-        "html",
-        "eslint",
+        "ts_ls",
+        "clangd"
     },
 })
 
@@ -41,21 +40,17 @@ lsp_config.gradle_ls.setup({
     on_attach = on_attach,
 })
 
+lsp_config.clangd.setup({
+    capabilities = capabilities,
+    on_attach = on_attach,
+})
+
 lsp_config.jdtls.setup({
     capabilities = capabilities,
     on_attach = on_attach,
 })
 
-lsp_config.cssls.setup({
-    capabilities = capabilities,
-    on_attach = on_attach,
-})
-lsp_config.html.setup({
-    filetypes = { "html", "templ", "ftlh" },
-    capabilities = capabilities,
-    on_attach = on_attach,
-})
-lsp_config.eslint.setup({
+lsp_config.ts_ls.setup({
     capabilities = capabilities,
     on_attach = on_attach,
 })

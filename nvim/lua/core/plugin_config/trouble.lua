@@ -1,4 +1,4 @@
----@class trouble.Mode: trouble.Config,trouble.Section.spec
+---@class trouble.Mode: trouble.Config,trouble.Section.spectrtrtrtr
 ---@field desc? string
 ---@field sections? string[]
 
