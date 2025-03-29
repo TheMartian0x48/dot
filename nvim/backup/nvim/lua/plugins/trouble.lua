@@ -1,0 +1,5 @@
+require("trouble.nvim").setup({
+
+
+})
+
