@@ -164,6 +164,10 @@ if [[ -d "$DOTFILES_DIR/tmux" ]]; then
     create_symlink "$DOTFILES_DIR/tmux" "$CONFIG_DIR/tmux"
 fi
 
+if [[ -d "$DOTFILES_DIR/btop" ]]; then
+    create_symlink "$DOTFILES_DIR/btop" "$CONFIG_DIR/btop"
+fi
+
 if [[ -f "$DOTFILES_DIR/.zshrc" ]]; then
     create_symlink "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
 fi
