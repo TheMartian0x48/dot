@@ -6,7 +6,7 @@
 local cmp = require("cmp")
 local luasnip = require("luasnip")
 
-    -- Enhanced completion setup
+-- Enhanced completion setup
 cmp.setup({
     completion = {
         completeopt = "menu,menuone,noselect", -- Better UX with noselect
@@ -87,7 +87,7 @@ cmp.setup({
                 Operator = "󰆕",
                 TypeParameter = "",
             }
-            
+
             -- Source names with different colors/styles
             local source_names = {
                 nvim_lsp = "[LSP]",
@@ -97,23 +97,23 @@ cmp.setup({
                 nvim_lua = "[API]",
                 cmdline = "[Cmd]",
             }
-            
+
             -- Add icon with kind
             vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind] or "", vim_item.kind)
-            
+
             -- Add source identifier
             vim_item.menu = source_names[entry.source.name] or "[?]"
-            
+
             -- Truncate long completion items
             if string.len(vim_item.abbr) > 50 then
                 vim_item.abbr = string.sub(vim_item.abbr, 1, 47) .. "..."
             end
-            
+
             -- Add duplicate identifier if needed (for debugging)
             if entry.source.name == "buffer" and entry.source.source and entry.source.source.keyword then
                 vim_item.dup = 0 -- Prevent buffer duplicates
             end
-            
+
             return vim_item
         end,
     },
@@ -124,17 +124,17 @@ cmp.setup({
         ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
         ["<Up>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
         ["<Down>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-        
+
         -- Documentation scrolling
         ["<C-d>"] = cmp.mapping.scroll_docs(4),
         ["<C-u>"] = cmp.mapping.scroll_docs(-4),
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
         ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-        
+
         -- Completion control
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-e>"] = cmp.mapping.abort(),
-        
+
         -- Confirm completion
         ["<CR>"] = cmp.mapping.confirm({
             behavior = cmp.ConfirmBehavior.Replace,
@@ -164,21 +164,21 @@ cmp.setup({
 
     sources = cmp.config.sources({
         -- Primary sources (higher priority) - these will be shown first
-        { 
+        {
             name = "nvim_lsp",
             priority = 1000,
             keyword_length = 1,
             max_item_count = 20,
             group_index = 1,
         },
-        { 
+        {
             name = "luasnip",
             priority = 750,
             keyword_length = 1,
             max_item_count = 15,
             group_index = 1,
         },
-        { 
+        {
             name = "nvim_lua",
             priority = 700,
             keyword_length = 1,
@@ -187,7 +187,7 @@ cmp.setup({
         },
     }, {
         -- Secondary sources (fallback) - only shown if primary sources don't provide enough
-        { 
+        {
             name = "buffer",
             priority = 500,
             keyword_length = 3,
@@ -200,7 +200,7 @@ cmp.setup({
                 end
             }
         },
-        { 
+        {
             name = "path",
             priority = 300,
             keyword_length = 1,
@@ -261,14 +261,14 @@ cmp.setup.cmdline(":", {
         ["<C-p>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "c" }),
     }),
     sources = cmp.config.sources({
-        { 
+        {
             name = "path",
             option = {
                 trailing_slash = true,
             }
         }
     }, {
-        { 
+        {
             name = "cmdline",
             option = {
                 ignore_cmds = { "Man", "!" }
@@ -278,7 +278,7 @@ cmp.setup.cmdline(":", {
     completion = {
         completeopt = "menu,menuone,noselect",
     },
-    matching = { 
+    matching = {
         disallow_symbol_nonprefix_matching = false,
         disallow_fuzzy_matching = false,
     },
@@ -297,12 +297,12 @@ end
 -- Set up nice highlighting for completion menu
 vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
 
--- Disable completion in certain contexts  
+-- Disable completion in certain contexts
 vim.api.nvim_create_autocmd("FileType", {
     pattern = { "gitcommit", "markdown", "text" },
     callback = function()
-        require("cmp").setup.buffer({ 
-            enabled = false 
+        require("cmp").setup.buffer({
+            enabled = false
         })
     end,
 })
@@ -314,11 +314,11 @@ vim.api.nvim_create_autocmd("FileType", {
         require("cmp").setup.buffer({
             sources = cmp.config.sources({
                 { name = "nvim_lsp", priority = 1000, max_item_count = 20 },
-                { name = "nvim_lua", priority = 900, max_item_count = 15 },
-                { name = "luasnip", priority = 800, max_item_count = 10 },
+                { name = "nvim_lua", priority = 900,  max_item_count = 15 },
+                { name = "luasnip",  priority = 800,  max_item_count = 10 },
             }, {
                 { name = "buffer", keyword_length = 4, max_item_count = 3 },
-                { name = "path", max_item_count = 3 },
+                { name = "path",   max_item_count = 3 },
             })
         })
     end,

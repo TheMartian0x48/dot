@@ -4,7 +4,7 @@ require("nvim-web-devicons").setup({
     default = true,
     strict = true,
     variant = "auto", -- Auto-detect based on background
-    
+
     -- Custom icon overrides for specific files
     override = {
         zsh = {
@@ -110,7 +110,7 @@ require("nvim-web-devicons").setup({
             name = "CPlusPlus"
         }
     },
-    
+
     -- Filename-specific overrides
     override_by_filename = {
         [".gitignore"] = {
@@ -204,7 +204,7 @@ require("nvim-web-devicons").setup({
             name = "LazyLock"
         }
     },
-    
+
     -- Extension-specific overrides
     override_by_extension = {
         ["log"] = {
@@ -298,7 +298,7 @@ require("nvim-web-devicons").setup({
             name = "Ini"
         }
     },
-    
+
     -- Operating system specific overrides
     override_by_operating_system = {
         ["apple"] = {
