@@ -168,6 +168,11 @@ if [[ -d "$DOTFILES_DIR/btop" ]]; then
     create_symlink "$DOTFILES_DIR/btop" "$CONFIG_DIR/btop"
 fi
 
+if [[ -d "$DOTFILES_DIR/neofetch" ]]; then
+    create_symlink "$DOTFILES_DIR/neofetch" "$CONFIG_DIR/neofetch"
+    # alias neofetch_dev='neofetch --config ~/.config/neofetch/dev.conf'
+fi
+
 if [[ -f "$DOTFILES_DIR/.zshrc" ]]; then
     create_symlink "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
 fi
