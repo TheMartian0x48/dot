@@ -173,12 +173,12 @@ if [[ -d "$DOTFILES_DIR/neofetch" ]]; then
     # alias neofetch_dev='neofetch --config ~/.config/neofetch/dev.conf'
 fi
 
-if [[ -f "$DOTFILES_DIR/.zshrc" ]]; then
-    create_symlink "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
+if [[ -f "$DOTFILES_DIR/dot/.zshrc" ]]; then
+    create_symlink "$DOTFILES_DIR/dot/.zshrc" "$HOME/.zshrc"
 fi
 
-if [[ -f "$DOTFILES_DIR/.gitconfig" ]]; then
-    create_symlink "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
+if [[ -f "$DOTFILES_DIR/dot/.gitconfig" ]]; then
+    create_symlink "$DOTFILES_DIR/dot/.gitconfig" "$HOME/.gitconfig"
 fi
 
 echo "✅ All packages installation completed!"

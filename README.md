@@ -50,6 +50,8 @@ dot/
 - **macOS:** Homebrew
 - **Ubuntu/Debian:** apt package manager
 
+
+> But sure to update details in .gitconfig
 ---
 
 <sub>🤖 Documentation and repository organization enhanced with AI assistance</sub>
