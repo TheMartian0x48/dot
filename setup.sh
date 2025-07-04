@@ -173,6 +173,3 @@ if [[ -f "$DOTFILES_DIR/.gitconfig" ]]; then
 fi
 
 echo "✅ All packages installation completed!"
-
-
-
