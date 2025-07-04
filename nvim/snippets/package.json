@@ -1,0 +1,96 @@
+{
+    "go": {
+        "Error handling": {
+            "prefix": "iferr",
+            "body": [
+                "if err != nil {",
+                "\treturn ${1:nil, }err",
+                "}"
+            ],
+            "description": "Go error handling pattern"
+        },
+        "Method": {
+            "prefix": "func",
+            "body": [
+                "func (${1:receiver} ${2:Type}) ${3:methodName}(${4:params}) ${5:returnType} {",
+                "\t${6:// TODO: implement}",
+                "\t${0}",
+                "}"
+            ],
+            "description": "Go method definition"
+        },
+        "Struct": {
+            "prefix": "struct",
+            "body": [
+                "type ${1:Name} struct {",
+                "\t${2:field} ${3:type}",
+                "}"
+            ],
+            "description": "Go struct definition"
+        },
+        "Test function": {
+            "prefix": "test",
+            "body": [
+                "func Test${1:FunctionName}(t *testing.T) {",
+                "\t${2:// Arrange}",
+                "\t${3:// Act}",
+                "\t${4:// Assert}",
+                "\t${0}",
+                "}"
+            ],
+            "description": "Go test function"
+        }
+    },
+    "lua": {
+        "Function": {
+            "prefix": "function",
+            "body": [
+                "function ${1:name}(${2:args})",
+                "\t${3:-- TODO: implement}",
+                "\t${0}",
+                "end"
+            ],
+            "description": "Lua function definition"
+        },
+        "Local function": {
+            "prefix": "lfunction",
+            "body": [
+                "local function ${1:name}(${2:args})",
+                "\t${3:-- TODO: implement}",
+                "\t${0}",
+                "end"
+            ],
+            "description": "Local Lua function definition"
+        },
+        "Module": {
+            "prefix": "module",
+            "body": [
+                "local M = {}",
+                "",
+                "${1:-- Module implementation}",
+                "",
+                "return M"
+            ],
+            "description": "Lua module template"
+        }
+    },
+    "javascript": {
+        "Console log": {
+            "prefix": "cl",
+            "body": [
+                "console.log(${1:message});"
+            ],
+            "description": "Console log statement"
+        },
+        "Arrow function": {
+            "prefix": "af",
+            "body": [
+                "const ${1:name} = (${2:params}) => {",
+                "\t${3:// TODO: implement}",
+                "\t${0}",
+                "};"
+            ],
+            "description": "Arrow function definition"
+        }
+    }
+}
