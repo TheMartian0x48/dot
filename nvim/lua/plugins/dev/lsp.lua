@@ -231,6 +231,13 @@ lsp_config.lua_ls.setup({
             },
             telemetry = { enable = false },
             hint = { enable = true },
+            format = {
+                enable = true,
+                defaultConfig = {
+                    indent_style = "space",
+                    indent_size = "4",
+                }
+            }
         },
     },
 })

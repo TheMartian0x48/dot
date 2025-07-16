@@ -1,11 +1,9 @@
--- Which-key configuration for keymap hints and organization
 local wk = require("which-key")
 local git = require("plugins.dev.git")
 local terminal = require("plugins.core.terminal")
 local fileops = require("plugins.core.fileops")
 local navigation = require("plugins.core.navigation")
 
--- Setup which-key with custom options
 wk.setup({
     preset = "modern",
     delay = function(ctx)
@@ -24,7 +22,7 @@ wk.setup({
         title_pos = "center",
         zindex = 1000,
         wo = {
-            winblend = 0, -- No transparency (opaque)
+            winblend = 0, 
         },
     },
     layout = {
@@ -78,19 +76,17 @@ wk.setup({
     },
 })
 
--- Register key mappings with descriptions
 wk.add({
-    -- GitHub Copilot
     { "<leader>a", group = "🤖 AI (Copilot)" },
     { "<leader>ae", "<cmd>Copilot enable<cr>", desc = "Enable Copilot" },
     { "<leader>ad", "<cmd>Copilot disable<cr>", desc = "Disable Copilot" },
     { "<leader>at", "<cmd>Copilot status<cr>", desc = "Copilot Status" },
     { "<leader>ap", "<cmd>Copilot panel<cr>", desc = "Open Suggestions Panel" },
+})
 
-    -- File operations (completely redesigned)
+wk.add({
     { "<leader>f", group = "📁 File" },
 
-    -- Recent Files
     { "<leader>fr", group = "🕒 Recent" },
     { "<leader>fra", fileops.recent_all, desc = "All Recent Files" },
     { "<leader>frp", fileops.recent_project, desc = "Project Recent" },
@@ -99,7 +95,6 @@ wk.add({
     { "<leader>frc", fileops.recent_by_category, desc = "By Category" },
     { "<leader>frt", fileops.recent_by_type, desc = "By Type" },
 
-    -- Project Operations
     { "<leader>fp", group = "📂 Project" },
     { "<leader>fpr", fileops.project_root_files, desc = "Project Root Files" },
     { "<leader>fpw", fileops.workspace_files, desc = "Workspace Files" },
@@ -108,7 +103,6 @@ wk.add({
     { "<leader>fpi", fileops.ignored_files, desc = "Ignored Files" },
     { "<leader>fps", fileops.project_structure, desc = "Project Structure" },
 
-    -- Search & Grep
     { "<leader>fs", group = "🔍 Search" },
     { "<leader>fsl", "<cmd>Telescope live_grep<cr>", desc = "Live Grep" },
     { "<leader>fsc", fileops.grep_with_context, desc = "Grep with Context" },
@@ -118,7 +112,6 @@ wk.add({
     { "<leader>fsr", fileops.grep_replace, desc = "Grep & Replace" },
     { "<leader>fsh", fileops.search_history, desc = "Search History" },
 
-    -- File Creation
     { "<leader>fn", group = "✨ New" },
     { "<leader>fnf", fileops.new_file, desc = "New File" },
     { "<leader>fnt", fileops.new_from_template, desc = "From Template" },
@@ -128,7 +121,6 @@ wk.add({
     { "<leader>fnc", fileops.copy_file, desc = "Copy File" },
     { "<leader>fnr", fileops.rename_file, desc = "Rename File" },
 
-    -- File Operations
     { "<leader>fo", group = "⚙️ Operations" },
     { "<leader>for", fileops.rename, desc = "Rename" },
     { "<leader>fod", fileops.delete_file, desc = "Delete" },
@@ -137,7 +129,9 @@ wk.add({
     { "<leader>fop", fileops.file_permissions, desc = "Permissions" },
     { "<leader>foi", fileops.file_info, desc = "File Info" },
 
-    -- Buffer operations (enhanced)
+})
+
+wk.add({
     { "<leader>b", group = "📄 Buffer" },
     { "<leader>bn", "<cmd>bnext<cr>", desc = "Next Buffer" },
     { "<leader>bp", "<cmd>bprev<cr>", desc = "Previous Buffer" },
@@ -151,8 +145,10 @@ wk.add({
     { "<leader>br", navigation.recent_buffers, desc = "Recent Buffers" },
     { "<leader>bq", navigation.smart_close_buffer, desc = "Smart Close Buffer" },
     { "<leader>bj", navigation.jump_to_buffer_by_number, desc = "Jump to Buffer #" },
+})
 
-    -- Window operations (enhanced)
+wk.add({
+
     { "<leader>w", group = "🪟 Window" },
     { "<leader>wh", "<C-w>h", desc = "Go to Left Window" },
     { "<leader>wj", "<C-w>j", desc = "Go to Lower Window" },
@@ -168,8 +164,10 @@ wk.add({
     { "<leader>wr", "<C-w>r", desc = "Rotate Windows" },
     { "<leader>wR", "<C-w>R", desc = "Rotate Windows Reverse" },
     { "<leader>wx", "<C-w>x", desc = "Exchange Windows" },
+})
 
-    -- File Explorer
+wk.add({
+
     { "<leader>e", group = "🌳 Explorer" },
     { "<leader>ee", "<cmd>NvimTreeToggle<cr>", desc = "Toggle Explorer" },
     { "<leader>ef", "<cmd>NvimTreeFocus<cr>", desc = "Focus Explorer" },
@@ -178,11 +176,12 @@ wk.add({
     { "<leader>ec", "<cmd>NvimTreeCollapse<cr>", desc = "Collapse Explorer" },
     { "<leader>eo", "<cmd>Oil<cr>", desc = "Open Oil File Manager" },
     { "-", "<cmd>Oil<cr>", desc = "Open Parent Directory" },
+})
 
-    -- LSP operations
+wk.add({
+
     { "<leader>l", group = "🔧 LSP" },
 
-    -- Core LSP actions (keeping your existing ones + improvements)
     { "<leader>ld", "<cmd>Telescope lsp_definitions<cr>", desc = "Go to Definition" },
     { "<leader>li", "<cmd>Telescope lsp_implementations<cr>", desc = "Implementations" },
     { "<leader>lt", "<cmd>Telescope lsp_type_definitions<cr>", desc = "Type Definitions" },
@@ -194,26 +193,22 @@ wk.add({
     { "<leader>lh", vim.lsp.buf.hover, desc = "Hover Documentation" },
     { "<leader>lk", vim.lsp.buf.signature_help, desc = "Signature Help" },
 
-    -- References group - using 'le' for rEferences
     { "<leader>le", group = "🔗 References" },
     { "<leader>ler", "<cmd>Telescope lsp_references<cr>", desc = "References" },
     { "<leader>lei", "<cmd>Telescope lsp_implementations<cr>", desc = "Implementations" },
     { "<leader>led", "<cmd>Telescope lsp_definitions<cr>", desc = "Definitions" },
     { "<leader>let", "<cmd>Telescope lsp_type_definitions<cr>", desc = "Type Definitions" },
 
-    -- Refactoring actions - using 'lx' for eXtract/refactor
     { "<leader>lx", group = "🔧 Refactor" },
     { "<leader>lxf", function() vim.lsp.buf.code_action({ context = { only = { "refactor.extract.function" } } }) end, desc = "Extract Function" },
     { "<leader>lxv", function() vim.lsp.buf.code_action({ context = { only = { "refactor.extract.variable" } } }) end, desc = "Extract Variable" },
     { "<leader>lxi", function() vim.lsp.buf.code_action({ context = { only = { "refactor.inline" } } }) end, desc = "Inline" },
     { "<leader>lxn", function() vim.lsp.buf.rename(vim.fn.input("New name: ")) end, desc = "Rename (with input)" },
 
-    -- Call hierarchy - using 'lc' for call hierarchy
     { "<leader>lc", group = "📞 Call Hierarchy" },
-    { "<leader>lci", vim.lsp.buf.incoming_calls, desc = "Incoming Calls" },
-    { "<leader>lco", vim.lsp.buf.outgoing_calls, desc = "Outgoing Calls" },
+    { "<leader>lci", function() vim.lsp.buf.incoming_calls() end, desc = "Incoming Calls" },
+    { "<leader>lco", function() vim.lsp.buf.outgoing_calls() end, desc = "Outgoing Calls" },
 
-    -- Enhanced diagnostics management - using 'lm' for Medical/diagnostics
     { "<leader>lm", group = "🩺 Diagnostics" },
     { "<leader>lmd", vim.diagnostic.open_float, desc = "Show Line Diagnostics" },
     { "<leader>lml", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Buffer Diagnostics" },
@@ -222,101 +217,115 @@ wk.add({
     { "<leader>lmt", vim.diagnostic.toggle, desc = "Toggle Diagnostics" },
     { "<leader>lms", function() vim.diagnostic.config({ virtual_text = not vim.diagnostic.config().virtual_text }) end, desc = "Toggle Virtual Text" },
 
-    -- Enhanced workspace management - using 'lw' for workspace
     { "<leader>lw", group = "🏢 Workspace" },
     { "<leader>lws", "<cmd>Telescope lsp_workspace_symbols<cr>", desc = "Workspace Symbols" },
     { "<leader>lwd", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", desc = "Dynamic Workspace Symbols" },
-    { "<leader>lwa", vim.lsp.buf.add_workspace_folder, desc = "Add Workspace Folder" },
-    { "<leader>lwr", vim.lsp.buf.remove_workspace_folder, desc = "Remove Workspace Folder" },
-    { "<leader>lwl", function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, desc = "List Workspace Folders" },
+    { "<leader>lwa", function() vim.lsp.buf.workspace.add_folder() end, desc = "Add Workspace Folder" },
+    { "<leader>lwr", function() vim.lsp.buf.workspace.remove_folder() end, desc = "Remove Workspace Folder" },
+    { "<leader>lwl", function() print(vim.inspect(vim.lsp.buf.workspace.list())) end, desc = "List Workspace Folders" },
     { "<leader>lwx", "<cmd>LspRestart<cr>", desc = "Restart LSP" },
 
-    -- Enhanced formatting options - using 'lp' for Pretty/format
     { "<leader>lp", group = "📝 Format" },
     { "<leader>lpf", vim.lsp.buf.format, desc = "Format Document" },
     { "<leader>lps", function() vim.lsp.buf.format({ range = true }) end, desc = "Format Selection", mode = "v" },
     { "<leader>lpo", function() vim.lsp.buf.code_action({ context = { only = { "source.organizeImports" } } }) end, desc = "Organize Imports" },
     { "<leader>lpa", function() vim.lsp.buf.code_action({ context = { only = { "source.fixAll" } } }) end, desc = "Fix All" },
 
-    -- LSP info and debugging - using 'lz' for info (avoiding 'li' conflict)
     { "<leader>lz", group = "ℹ️ LSP Info" },
     { "<leader>lzi", "<cmd>LspInfo<cr>", desc = "LSP Info" },
     { "<leader>lzl", "<cmd>LspLog<cr>", desc = "LSP Log" },
     { "<leader>lzs", function() print(vim.inspect(vim.lsp.get_active_clients())) end, desc = "Active LSP Clients" },
     { "<leader>lzc", function() vim.lsp.buf.server_ready() end, desc = "Check Server Status" },
+})
 
-    -- Diagnostics/Trouble
+wk.add({
     { "<leader>x", group = "🚨 Diagnostics" },
     { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)" },
     { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics" },
     { "<leader>xL", "<cmd>Trouble loclist toggle<cr>", desc = "Location List" },
     { "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix List" },
-    { "<leader>xn", vim.diagnostic.goto_next, desc = "Next Diagnostic" },
-    { "<leader>xp", vim.diagnostic.goto_prev, desc = "Previous Diagnostic" },
+    { "<leader>xn", function() vim.diagnostic.goto({ direction = "next" }) end, desc = "Next Diagnostic" },
+    { "<leader>xp", function() vim.diagnostic.goto({ direction = "prev" }) end, desc = "Previous Diagnostic" },
+})
 
-    -- Git operations - ALL under <leader>g
+wk.add({
     { "<leader>g", group = "🔀 Git" },
 
-    -- Main Git interface
+    { "<leader>gB", git.blame_line_full, desc = "Blame Line (Full)" },
+    { "<leader>gc", git.git_commits, desc = "Git Commits" },
+    { "<leader>gC", git.git_bcommits, desc = "Buffer Commits" },
     { "<leader>gg", git.open_neogit, desc = "Git Status (Neogit)" },
+    { "<leader>gt", git.toggle_blame, desc = "Toggle Line Blame" },
 
-    -- Branch operations
     { "<leader>gb", group = "🌿 Branch" },
     { "<leader>gbb", git.branch_checkout, desc = "Branch Checkout (Interactive)" },
     { "<leader>gbc", git.branch_create, desc = "Create New Branch" },
     { "<leader>gbd", git.branch_delete, desc = "Delete Branch (Interactive)" },
-    { "<leader>gbr", git.branch_rename, desc = "Rename Current Branch" },
-    { "<leader>gbm", git.branch_merge, desc = "Merge Branch (Interactive)" },
     { "<leader>gbl", git.branch_list, desc = "List All Branches" },
+    { "<leader>gbm", git.branch_merge, desc = "Merge Branch (Interactive)" },
     { "<leader>gbp", git.branch_push, desc = "Push Current Branch" },
+    { "<leader>gbr", git.branch_rename, desc = "Rename Current Branch" },
 
-    -- Diff operations
     { "<leader>gd", group = "📊 Diff" },
-    { "<leader>gdb", git.diff_with_branch, desc = "Diff with Branch" },
-    { "<leader>gdp", git.diff_with_prev_commit, desc = "Diff with Previous Commit" },
-    { "<leader>gdc", git.diff_with_commit, desc = "Diff with Commit" },
-    { "<leader>gdt", git.diff_two_commits, desc = "Diff Two Commits" },
-    { "<leader>gdr", git.diff_with_remote_branch, desc = "Diff with Remote Branch" },
-    { "<leader>gdf", git.diff_current_file_head, desc = "Diff File (Last Commit)" },
     { "<leader>gda", git.diff_current_file_commit, desc = "Diff File (Any Commit)" },
+    { "<leader>gdb", git.diff_with_branch, desc = "Diff with Branch" },
+    { "<leader>gdc", git.diff_with_commit, desc = "Diff with Commit" },
     { "<leader>gdd", "<cmd>DiffviewClose<cr>", desc = "Close Diff View" },
+    { "<leader>gdf", git.diff_current_file_head, desc = "Diff File (Last Commit)" },
+    { "<leader>gdp", git.diff_with_prev_commit, desc = "Diff with Previous Commit" },
+    { "<leader>gdr", git.diff_with_remote_branch, desc = "Diff with Remote Branch" },
     { "<leader>gds", git.diff_staged, desc = "Diff Staged Changes" },
+    { "<leader>gdt", git.diff_two_commits, desc = "Diff Two Commits" },
 
-    -- Hunk operations
     { "<leader>gh", group = "🔄 Hunk" },
+    { "<leader>gha", git.stage_all_hunks, desc = "Stage All Hunks" },
+    { "<leader>ghn", git.next_hunk, desc = "Next Hunk" },
+    { "<leader>ghN", git.prev_hunk, desc = "Previous Hunk" },
     { "<leader>ghp", git.preview_hunk, desc = "Preview Hunk" },
     { "<leader>ghr", git.reset_hunk, desc = "Reset Hunk" },
     { "<leader>ghR", git.reset_buffer, desc = "Reset Buffer" },
     { "<leader>ghs", git.stage_hunk, desc = "Stage Hunk" },
     { "<leader>ghS", git.stage_buffer, desc = "Stage Buffer" },
     { "<leader>ghu", git.undo_stage_hunk, desc = "Undo Stage Hunk" },
-    { "<leader>ghn", git.next_hunk, desc = "Next Hunk" },
-    { "<leader>ghN", git.prev_hunk, desc = "Previous Hunk" },
     { "<leader>ghv", git.view_hunk_diff, desc = "View Hunk Diff" },
-    { "<leader>gha", git.stage_all_hunks, desc = "Stage All Hunks" },
 
-    -- Log/History operations
     { "<leader>gl", group = "📜 Log/History" },
-    { "<leader>gll", git.interactive_log, desc = "Interactive Git Log" },
-    { "<leader>glf", git.enhanced_file_history, desc = "File History (Enhanced)" },
-    { "<leader>glc", git.current_file_history, desc = "Current File History" },
-    { "<leader>glb", git.branch_history, desc = "Branch History" },
     { "<leader>gla", git.author_log, desc = "Author Log" },
+    { "<leader>glb", git.branch_history, desc = "Branch History" },
+    { "<leader>glc", git.current_file_history, desc = "Current File History" },
     { "<leader>gld", git.date_range_log, desc = "Date Range Log" },
+    { "<leader>glf", git.enhanced_file_history, desc = "File History (Enhanced)" },
     { "<leader>glg", git.graph_log, desc = "Graph Log" },
+    { "<leader>gll", git.interactive_log, desc = "Interactive Git Log" },
     { "<leader>gls", git.search_commits, desc = "Search Commits" },
 
-    -- Stash operations
+    { "<leader>gw", group = "🌐 Remote" },
+    { "<leader>gwa", git.remote_add, desc = "Add Remote" },
+    { "<leader>gwf", git.remote_fetch, desc = "Fetch from Remote" },
+    { "<leader>gwl", git.remote_list, desc = "List Remotes" },
+    { "<leader>gwp", git.remote_prune, desc = "Prune Remote Branches" },
+    { "<leader>gwr", git.remote_remove, desc = "Remove Remote" },
+    { "<leader>gwt", git.remote_track, desc = "Track Remote Branch" },
+
+    { "<leader>gx", group = "⚡ Quick Actions" },
+    { "<leader>gxa", git.amend_commit, desc = "Amend Last Commit" },
+    { "<leader>gxc", git.smart_commit, desc = "Smart Commit (Stage + Commit)" },
+    { "<leader>gxf", git.fetch_all, desc = "Fetch All Remotes" },
+    { "<leader>gxp", git.push_with_options, desc = "Push with Options" },
+    { "<leader>gxP", git.pull_with_options, desc = "Pull with Options" },
+    { "<leader>gxr", git.interactive_rebase, desc = "Interactive Rebase" },
+    { "<leader>gxu", git.undo_commit, desc = "Undo Last Commit" },
+    { "<leader>gxy", git.cherry_pick, desc = "Cherry-pick (Interactive)" },
+
     { "<leader>gz", group = "📦 Stash" },
-    { "<leader>gzl", git.stash_list, desc = "List Stashes (Interactive)" },
-    { "<leader>gzs", git.quick_stash, desc = "Quick Stash" },
     { "<leader>gza", git.stash_apply, desc = "Apply Stash (Interactive)" },
-    { "<leader>gzp", git.stash_pop, desc = "Pop Stash (Interactive)" },
-    { "<leader>gzd", git.stash_drop, desc = "Drop Stash (Interactive)" },
     { "<leader>gzc", git.stash_clear, desc = "Clear All Stashes" },
+    { "<leader>gzd", git.stash_drop, desc = "Drop Stash (Interactive)" },
+    { "<leader>gzl", git.stash_list, desc = "List Stashes (Interactive)" },
+    { "<leader>gzp", git.stash_pop, desc = "Pop Stash (Interactive)" },
+    { "<leader>gzs", git.quick_stash, desc = "Quick Stash" },
     { "<leader>gzv", git.stash_view, desc = "View Stash Content" },
 
-    -- Quick Actions
     { "<leader>gx", group = "⚡ Quick Actions" },
     { "<leader>gxc", git.smart_commit, desc = "Smart Commit (Stage + Commit)" },
     { "<leader>gxa", git.amend_commit, desc = "Amend Last Commit" },
@@ -327,7 +336,6 @@ wk.add({
     { "<leader>gxy", git.cherry_pick, desc = "Cherry-pick (Interactive)" },
     { "<leader>gxu", git.undo_commit, desc = "Undo Last Commit" },
 
-    -- Remote operations
     { "<leader>gw", group = "🌐 Remote" },
     { "<leader>gwl", git.remote_list, desc = "List Remotes" },
     { "<leader>gwa", git.remote_add, desc = "Add Remote" },
@@ -336,15 +344,15 @@ wk.add({
     { "<leader>gwf", git.remote_fetch, desc = "Fetch from Remote" },
     { "<leader>gwt", git.remote_track, desc = "Track Remote Branch" },
 
-    -- Blame operations
     { "<leader>gB", git.blame_line_full, desc = "Blame Line (Full)" },
     { "<leader>gt", git.toggle_blame, desc = "Toggle Line Blame" },
 
-    -- Telescope Git operations
     { "<leader>gc", git.git_commits, desc = "Git Commits" },
     { "<leader>gC", git.git_bcommits, desc = "Buffer Commits" },
+})
 
-    -- Search operations
+wk.add({
+
     { "<leader>s", group = "🔍 Search" },
     { "<leader>sW", _G.telescope_custom.grep_string_visual, desc = "Search Word Under Cursor" },
     { "<leader>sb", "<cmd>Telescope buffers<cr>", desc = "Search Buffers" },
@@ -358,11 +366,13 @@ wk.add({
     { "<leader>sl", "<cmd>Telescope loclist<cr>", desc = "Search Location List" },
     { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Search Marks" },
     { "<leader>sq", "<cmd>Telescope quickfix<cr>", desc = "Search Quickfix" },
-    { "<leader>sr", "<cmd>Telescope oldfiles<cr>", desc = "Search Recent" }, 
+    { "<leader>sr", "<cmd>Telescope oldfiles<cr>", desc = "Search Recent" },
     { "<leader>st", telescope_custom.find_by_extension, desc = "Search by Type/Extension" },
     { "<leader>sw", telescope_custom.grep_by_extension, desc = "Search Words by Type" },
 
-    -- Debug operations
+})
+
+wk.add({
     { "<leader>d", group = "🐛 Debug" },
     { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
     { "<leader>dB", function() require("dap").set_breakpoint(vim.fn.input('Breakpoint condition: ')) end, desc = "Conditional Breakpoint" },
@@ -375,23 +385,28 @@ wk.add({
     { "<leader>dt", function() require("dap").terminate() end, desc = "Terminate" },
     { "<leader>dl", function() require("dap").run_last() end, desc = "Run Last" },
 
-    -- Debug function keys for quick access
     { "<F8>", function() require("dap").continue() end, desc = "Debug: Continue" },
     { "<F9>", function() require("dap").step_into() end, desc = "Debug: Step Into" },
     { "<F10>", function() require("dap").step_over() end, desc = "Debug: Step Over" },
     { "<F11>", function() require("dap").step_out() end, desc = "Debug: Step Out" },
+})
 
-    -- Colorscheme
+wk.add({
+
     { "<leader>c", group = "🎨 Colorscheme" },
     { "<leader>cs", "<cmd>Telescope colorscheme enable_preview=true<cr>", desc = "Select Colorscheme" },
+})
 
-    -- Quick actions
+wk.add({
+
     { "<leader>q", group = "⚡ Quick" },
     { "<leader>qq", "<cmd>qa<cr>", desc = "Quit All" },
     { "<leader>qw", "<cmd>wqa<cr>", desc = "Save and Quit All" },
     { "<leader>qf", "<cmd>qa!<cr>", desc = "Force Quit All" },
+})
 
-    -- Utility
+wk.add({
+
     { "<leader>u", group = "🔧 Utility" },
     { "<leader>ul", "<cmd>Lazy<cr>", desc = "Lazy Plugin Manager" },
     { "<leader>um", "<cmd>Mason<cr>", desc = "Mason LSP Manager" },
@@ -401,14 +416,18 @@ wk.add({
     { "<leader>us", "<cmd>Lazy sync<cr>", desc = "Sync Plugins" },
     { "<leader>uu", "<cmd>Lazy update<cr>", desc = "Update Plugins" },
     { "<leader>up", "<cmd>Lazy profile<cr>", desc = "Profile Plugins" },
+})
 
-    -- Sessions
+wk.add({
+
     { "<leader>S", group = "💾 Session" },
     { "<leader>Ss", "<cmd>SessionSave<cr>", desc = "Save Session" },
     { "<leader>Sr", "<cmd>SessionRestore<cr>", desc = "Restore Session" },
     { "<leader>Sd", "<cmd>SessionDelete<cr>", desc = "Delete Session" },
+})
 
-    -- Toggle options
+wk.add({
+
     { "<leader>o", group = "⚙️ Options" },
     { "<leader>on", "<cmd>set number!<cr>", desc = "Toggle Line Numbers" },
     { "<leader>or", "<cmd>set relativenumber!<cr>", desc = "Toggle Relative Numbers" },
@@ -418,22 +437,24 @@ wk.add({
     { "<leader>oc", "<cmd>set cursorline!<cr>", desc = "Toggle Cursor Line" },
     { "<leader>oh", "<cmd>set hlsearch!<cr>", desc = "Toggle Search Highlight" },
     { "<leader>of", "<cmd>set foldenable!<cr>", desc = "Toggle Folding" },
+})
 
-    -- Zen mode
+wk.add({
+
     { "<leader>z", group = "🧘 Zen" },
     { "<leader>zz", "<cmd>ZenMode<cr>", desc = "Zen Mode" },
     { "<leader>zt", "<cmd>Twilight<cr>", desc = "Twilight" },
+})
 
-    -- Terminal & External Tools
+wk.add({
+
     { "<leader>t", group = "💻 Terminal" },
 
-    -- Basic Terminal Operations
     { "<leader>tt", "<cmd>ToggleTerm<cr>", desc = "Toggle Terminal" },
     { "<leader>th", "<cmd>ToggleTerm direction=horizontal size=15<cr>", desc = "Horizontal Terminal" },
     { "<leader>tv", "<cmd>ToggleTerm direction=vertical size=80<cr>", desc = "Vertical Terminal" },
     { "<leader>ta", "<cmd>ToggleTermToggleAll<cr>", desc = "Toggle All Terminals" },
 
-    -- Multiple Terminal Management
     { "<leader>tm", group = "🔢 Multiple Terminals" },
     { "<leader>tm1", "<cmd>1ToggleTerm<cr>", desc = "Terminal 1" },
     { "<leader>tm2", "<cmd>2ToggleTerm<cr>", desc = "Terminal 2" },
@@ -441,58 +462,48 @@ wk.add({
     { "<leader>tm4", "<cmd>4ToggleTerm<cr>", desc = "Terminal 4" },
     { "<leader>tms", "<cmd>TermSelect<cr>", desc = "Select Terminal" },
 
-    -- System Monitoring Tools
     { "<leader>ts", group = "📊 System Tools" },
     { "<leader>tsh", terminal.htop, desc = "Htop" },
     { "<leader>tsb", terminal.btop, desc = "Btop" },
     { "<leader>tsd", terminal.ncdu, desc = "Disk Usage (ncdu)" },
 
-    -- Development Tools
     { "<leader>td", group = "🛠️ Dev Tools" },
     { "<leader>tdp", terminal.python_repl, desc = "Python REPL" },
     { "<leader>tdb", terminal.bpython, desc = "Bpython (Enhanced Python)" },
 
-    -- Enhanced Float Terminal (moved from tF to tf)
     { "<leader>tf", terminal.enhanced_float, desc = "Enhanced Float Terminal" },
 
-    -- Custom Command (moved from tcc to tc)
     { "<leader>tc", terminal.custom_command, desc = "Custom Command" },
+})
 
-    -- Window management with Ctrl
+wk.add({
+
     { "<C-h>", "<C-w>h", desc = "Go to Left Window", mode = { "n", "t" } },
     { "<C-j>", "<C-w>j", desc = "Go to Lower Window", mode = { "n", "t" } },
     { "<C-k>", "<C-w>k", desc = "Go to Upper Window", mode = { "n", "t" } },
     { "<C-l>", "<C-w>l", desc = "Go to Right Window", mode = { "n", "t" } },
 
-    -- Better window resizing
     { "<C-Up>", "<cmd>resize +2<cr>", desc = "Increase Window Height" },
     { "<C-Down>", "<cmd>resize -2<cr>", desc = "Decrease Window Height" },
     { "<C-Left>", "<cmd>vertical resize -2<cr>", desc = "Decrease Window Width" },
     { "<C-Right>", "<cmd>vertical resize +2<cr>", desc = "Increase Window Width" },
 
-    -- Tab navigation
     { "<Tab>", "<cmd>bnext<cr>", desc = "Next Buffer" },
     { "<S-Tab>", "<cmd>bprev<cr>", desc = "Previous Buffer" },
 
-    -- Better escape for terminal mode
     { "<Esc><Esc>", "<C-\\><C-n>", desc = "Exit Terminal Mode", mode = "t" },
 
-    -- Clear search highlighting and redraw
     { "<Esc>", "<cmd>nohlsearch<cr><cmd>redraw<cr>", desc = "Clear Search & Redraw" },
     { "<leader>h", "<cmd>nohlsearch<cr>", desc = "Clear Search Highlight" },
 
-    -- Better scrolling (keep cursor centered)
     { "<C-d>", navigation.smart_scroll_down, desc = "Smart Scroll Down & Center" },
     { "<C-u>", navigation.smart_scroll_up, desc = "Smart Scroll Up & Center" },
 
-    -- Quickfix navigation
     { "<M-j>", "<cmd>cnext<cr>", desc = "Next Quickfix Item" },
     { "<M-k>", "<cmd>cprev<cr>", desc = "Previous Quickfix Item" },
 
-    -- Quick save
     { "<C-s>", "<cmd>w<cr>", desc = "Save File", mode = { "n", "i", "v" } },
 
-    -- Direct buffer access by number
     { "<leader>1", function() navigation.goto_buffer(1) end, desc = "Buffer 1" },
     { "<leader>2", function() navigation.goto_buffer(2) end, desc = "Buffer 2" },
     { "<leader>3", function() navigation.goto_buffer(3) end, desc = "Buffer 3" },
@@ -504,15 +515,14 @@ wk.add({
     { "<leader>9", function() navigation.goto_buffer(9) end, desc = "Buffer 9" },
     { "<leader>0", function() navigation.goto_last_buffer() end, desc = "Last Buffer" },
 
-    -- Quick diagnostic navigation (no leader key needed - global shortcuts)
-    { "]d", vim.diagnostic.goto_next, desc = "Next Diagnostic" },
-    { "[d", vim.diagnostic.goto_prev, desc = "Previous Diagnostic" },
-    { "]e", function() vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR }) end, desc = "Next Error" },
-    { "[e", function() vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR }) end, desc = "Previous Error" },
-    { "]w", function() vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN }) end, desc = "Next Warning" },
-    { "[w", function() vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN }) end, desc = "Previous Warning" },
 
-    -- Enhanced search navigation with centering
+    { "]d", function() vim.diagnostic.goto({ direction = "next" }) end, desc = "Next Diagnostic" },
+    { "[d", function() vim.diagnostic.goto({ direction = "prev" }) end, desc = "Previous Diagnostic" },
+    { "]e", function() vim.diagnostic.goto({ direction = "next", severity = vim.diagnostic.severity.ERROR }) end, desc = "Next Error" },
+    { "[e", function() vim.diagnostic.goto({ direction = "prev", severity = vim.diagnostic.severity.ERROR }) end, desc = "Previous Error" },
+    { "]w", function() vim.diagnostic.goto({ direction = "next", severity = vim.diagnostic.severity.WARN }) end, desc = "Next Warning" },
+    { "[w", function() vim.diagnostic.goto({ direction = "prev", severity = vim.diagnostic.severity.WARN }) end, desc = "Previous Warning" },
+
     { "n", "nzzzv", desc = "Next Search (Centered)" },
     { "N", "Nzzzv", desc = "Previous Search (Centered)" },
     { "*", "*zzzv", desc = "Search Word Forward (Centered)" },
@@ -520,25 +530,21 @@ wk.add({
     { "g*", "g*zzzv", desc = "Search Partial Forward (Centered)" },
     { "g#", "g#zzzv", desc = "Search Partial Backward (Centered)" },
 
-    -- Jump navigation with centering
     { "<C-o>", "<C-o>zz", desc = "Jump Back (Centered)" },
     { "<C-i>", "<C-i>zz", desc = "Jump Forward (Centered)" },
     { "gg", "ggzz", desc = "Go to Top (Centered)" },
     { "G", "Gzz", desc = "Go to Bottom (Centered)" },
 
-    -- Enhanced paragraph/section navigation
     { "{", "{zz", desc = "Previous Paragraph (Centered)" },
     { "}", "}zz", desc = "Next Paragraph (Centered)" },
     { "[[", "[[zz", desc = "Previous Section (Centered)" },
     { "]]", "]]zz", desc = "Next Section (Centered)" },
 
-    -- View control (screen positioning)
     { "<leader>v", group = "👁️ View" },
     { "<leader>vt", "zt", desc = "View: Scroll to Top" },
     { "<leader>vc", "zz", desc = "View: Center Screen" },
     { "<leader>vb", "zb", desc = "View: Scroll to Bottom" },
 
-    -- Enhanced LSP navigation (global shortcuts for frequently used actions)
     { "gd", vim.lsp.buf.definition, desc = "Go to Definition" },
     { "gD", vim.lsp.buf.declaration, desc = "Go to Declaration" },
     { "gr", "<cmd>Telescope lsp_references<cr>", desc = "References" },
@@ -547,7 +553,6 @@ wk.add({
     { "K", vim.lsp.buf.hover, desc = "Hover Documentation" },
 })
 
--- Visual mode mappings
 wk.add({
     mode = { "v" },
     { "<leader>g", group = "🔀 Git" },
@@ -555,38 +560,30 @@ wk.add({
     { "<leader>ghs", git.stage_hunk, desc = "Stage Hunk" },
     { "<leader>ghr", git.reset_hunk, desc = "Reset Hunk" },
 
-    -- Code actions in visual mode
     { "<leader>l", group = "🔧 LSP" },
     { "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<cr>", desc = "Code Actions" },
     { "<leader>lf", "<cmd>lua vim.lsp.buf.format({ range = true })<cr>", desc = "Format Selection" },
 
-    -- Search selected text
     { "<leader>s", group = "🔍 Search" },
     { "<leader>sg", 'y<cmd>Telescope live_grep default_text=<C-r>"<cr>', desc = "Search Selection" },
 
-    -- Better indenting (keeps selection)
     { "<", "<gv", desc = "Unindent" },
     { ">", ">gv", desc = "Indent" },
 
-    -- Move selected lines
     { "J", ":m '>+1<cr>gv=gv", desc = "Move Selection Down" },
     { "K", ":m '<-2<cr>gv=gv", desc = "Move Selection Up" },
 })
 
--- Insert mode mappings
 wk.add({
     mode = { "i" },
-    -- Quick escape alternatives
     { "jk",    "<Esc>",                    desc = "Escape" },
     { "kj",    "<Esc>",                    desc = "Escape" },
 
-    -- Navigation in insert mode
     { "<C-h>", "<Left>",                   desc = "Move Left" },
     { "<C-j>", "<Down>",                   desc = "Move Down" },
     { "<C-k>", vim.lsp.buf.signature_help, desc = "Signature Help" },
     { "<C-l>", "<Right>",                  desc = "Move Right" },
 
-    -- Line operations
     { "<C-a>", "<Home>",                   desc = "Go to Beginning of Line" },
     { "<C-e>", "<End>",                    desc = "Go to End of Line" },
     { "<C-d>", "<Del>",                    desc = "Delete Character" },
