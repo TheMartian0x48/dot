@@ -90,13 +90,6 @@ wk.add({
     -- File operations (completely redesigned)
     { "<leader>f", group = "📁 File" },
 
-    -- Core Finding (Direct access - most used)
-    { "<leader>ff", fileops.find_files, desc = "Find Files" },
-    { "<leader>fd", fileops.find_in_directory, desc = "Find in Directory" },
-    { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Find Buffers" },
-    { "<leader>fg", "<cmd>Telescope git_files<cr>", desc = "Find Git Files" },
-    { "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Find Help" },
-
     -- Recent Files
     { "<leader>fr", group = "🕒 Recent" },
     { "<leader>fra", fileops.recent_all, desc = "All Recent Files" },
@@ -353,40 +346,21 @@ wk.add({
 
     -- Search operations
     { "<leader>s", group = "🔍 Search" },
-    {
-        "<leader>sf",
-        function()
-            local custom = _G.telescope_custom
-            if custom and custom.find_files_smart then
-                custom.find_files_smart()
-            else
-                require("telescope.builtin").find_files()
-            end
-        end,
-        desc = "Search Files (Smart)"
-    },
-    { "<leader>sg", "<cmd>Telescope live_grep<cr>", desc = "Search Grep" },
-    {
-        "<leader>sw",
-        function()
-            local custom = _G.telescope_custom
-            if custom and custom.grep_string_visual then
-                custom.grep_string_visual()
-            else
-                require("telescope.builtin").grep_string()
-            end
-        end,
-        desc = "Search Word Under Cursor"
-    },
+    { "<leader>sW", _G.telescope_custom.grep_string_visual, desc = "Search Word Under Cursor" },
     { "<leader>sb", "<cmd>Telescope buffers<cr>", desc = "Search Buffers" },
-    { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Search Help" },
-    { "<leader>sr", "<cmd>Telescope oldfiles<cr>", desc = "Search Recent" },
     { "<leader>sc", "<cmd>Telescope colorscheme<cr>", desc = "Search Colorschemes" },
-    { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Search Keymaps" },
-    { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Search Marks" },
+    { "<leader>sd", fileops.find_in_directory, desc = "Search in Directory" },
+    { "<leader>sf", _G.telescope_custom.find_files_smart, desc = "Search Files (Smart)" },
+    { "<leader>sg", "<cmd>Telescope live_grep<cr>", desc = "Search Grep" },
+    { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Search Help" },
     { "<leader>sj", "<cmd>Telescope jumplist<cr>", desc = "Search Jumplist" },
-    { "<leader>sq", "<cmd>Telescope quickfix<cr>", desc = "Search Quickfix" },
+    { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Search Keymaps" },
     { "<leader>sl", "<cmd>Telescope loclist<cr>", desc = "Search Location List" },
+    { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Search Marks" },
+    { "<leader>sq", "<cmd>Telescope quickfix<cr>", desc = "Search Quickfix" },
+    { "<leader>sr", "<cmd>Telescope oldfiles<cr>", desc = "Search Recent" }, 
+    { "<leader>st", telescope_custom.find_by_extension, desc = "Search by Type/Extension" },
+    { "<leader>sw", telescope_custom.grep_by_extension, desc = "Search Words by Type" },
 
     -- Debug operations
     { "<leader>d", group = "🐛 Debug" },

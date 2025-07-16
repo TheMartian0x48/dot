@@ -251,8 +251,14 @@ telescope.setup({
 
         -- UI select
         ["ui-select"] = {
-            require("telescope.themes").get_cursor({
-                -- even more opts
+            require("telescope.themes").get_dropdown({
+                -- Set the height for ui-select
+                layout_config = {
+                    width = 0.8,
+                    height = 0.9, -- 90% of screen height
+                },
+                borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+                winblend = 0,
             }),
         },
     },
@@ -319,6 +325,248 @@ M.buffers_safe = function()
     if not ok then
         vim.notify("Error opening buffer picker: " .. tostring(err), vim.log.levels.ERROR)
     end
+end
+
+M.find_by_extension = function()
+    -- Define extension categories
+    local categories = {
+        ["Code"] = { "go", "java", "py", "rb", "js", "ts", "php", "c", "cpp", "h", "hpp", "rs", "lua", "vim", "ex", "exs" },
+        ["Web"] = { "html", "css", "scss", "jsx", "tsx", "vue", "svelte" },
+        ["Data"] = { "json", "yaml", "yml", "toml", "xml", "csv", "sql" },
+        ["Docs"] = { "md", "txt", "rst", "adoc", "pdf", "doc", "docx" },
+        ["Config"] = { "ini", "conf", "config", "env", "properties" },
+        ["Go"] = { "go", "mod", "sum" },
+        ["Java"] = { "java", "class", "jar" },
+        ["JavaScript"] = { "js", "jsx", "ts", "tsx" },
+        ["Python"] = { "py", "pyc", "pyd", "pyo" },
+        ["Rust"] = { "rs", "toml" },
+        ["XML"] = { "xml" },
+        ["YAML"] = { "yaml", "yml" },
+        ["JSON"] = { "json" }
+    }
+    
+    -- Create a more robust choices table with explicit indices
+    local choices = {}
+    local choice_index = 1
+    
+    -- Add categories first
+    for category, _ in pairs(categories) do
+        choices[choice_index] = category
+        choice_index = choice_index + 1
+    end
+    
+    -- Then add extensions
+    for _, exts in pairs(categories) do
+        for _, ext in ipairs(exts) do
+            if not vim.tbl_contains(choices, ext) then
+                choices[choice_index] = ext
+                choice_index = choice_index + 1
+            end
+        end
+    end
+    
+    -- Sort the table
+    table.sort(choices)
+    
+    -- Use telescope directly for selection instead of vim.ui.select
+    local opts = {
+        prompt_title = "Select file type",
+        results_title = false,
+        finder = require("telescope.finders").new_table({
+            results = choices,
+            entry_maker = function(entry)
+                local display, icon
+                if categories[entry] then
+                    display = "📁 " .. entry .. " (" .. table.concat(categories[entry], ", ") .. ")"
+                    icon = "📁"
+                else
+                    display = "📄 ." .. entry
+                    icon = "📄"
+                end
+                return {
+                    value = entry,
+                    display = display,
+                    ordinal = entry,
+                    icon = icon
+                }
+            end
+        }),
+        sorter = require("telescope.sorters").get_generic_fuzzy_sorter(),
+        attach_mappings = function(prompt_bufnr, map)
+            local actions = require("telescope.actions")
+            actions.select_default:replace(function()
+                local selection = require("telescope.actions.state").get_selected_entry()
+                actions.close(prompt_bufnr)
+                
+                -- Make sure we have a selection
+                if not selection then return end
+                
+                local choice = selection.value
+                local extensions = {}
+                
+                if categories[choice] then
+                    -- Selected a category
+                    extensions = categories[choice]
+                else
+                    -- Selected a specific extension
+                    extensions = { choice }
+                end
+                
+                -- Build glob patterns
+                local glob_patterns = {}
+                for _, ext in ipairs(extensions) do
+                    table.insert(glob_patterns, "*." .. ext)
+                end
+
+                -- Use find_files with the pattern
+                require("telescope.builtin").find_files({
+                    prompt_title = "Find " .. choice .. " files",
+                    find_command = function()
+                        local cmd = { "rg", "--files" }
+                        -- Add each glob pattern separately
+                        for _, ext in ipairs(extensions) do
+                            table.insert(cmd, "--glob")
+                            table.insert(cmd, "*." .. ext)
+                        end
+                        return cmd
+                    end,
+                    layout_config = {
+                        width = 0.9,
+                        height = 0.9,
+                    },
+                })
+            end)
+            return true
+        end,
+        layout_config = {
+            width = 0.8,
+            height = 0.9,
+        }
+    }
+    
+    require("telescope.pickers").new({}, opts):find()
+end
+
+-- Add this function to your M table
+M.grep_by_extension = function()
+    -- Use the same categories as in find_by_extension
+    local categories = {
+        ["Code"] = { "go", "java", "py", "rb", "js", "ts", "php", "c", "cpp", "h", "hpp", "rs", "lua", "vim", "ex", "exs" },
+        ["Web"] = { "html", "css", "scss", "jsx", "tsx", "vue", "svelte" },
+        ["Data"] = { "json", "yaml", "yml", "toml", "xml", "csv", "sql" },
+        ["Docs"] = { "md", "txt", "rst", "adoc", "pdf", "doc", "docx" },
+        ["Config"] = { "ini", "conf", "config", "env", "properties" },
+        ["Go"] = { "go", "mod", "sum" },
+        ["Java"] = { "java", "class", "jar" },
+        ["JavaScript"] = { "js", "jsx", "ts", "tsx" },
+        ["Python"] = { "py", "pyc", "pyd", "pyo" },
+        ["Rust"] = { "rs", "toml" },
+        ["XML"] = { "xml" },
+        ["YAML"] = { "yaml", "yml" },
+        ["JSON"] = { "json" }
+    }
+    
+    -- Create choices table with explicit indices
+    local choices = {}
+    local choice_index = 1
+    
+    -- Add categories first
+    for category, _ in pairs(categories) do
+        choices[choice_index] = category
+        choice_index = choice_index + 1
+    end
+    
+    -- Then add extensions
+    for _, exts in pairs(categories) do
+        for _, ext in ipairs(exts) do
+            if not vim.tbl_contains(choices, ext) then
+                choices[choice_index] = ext
+                choice_index = choice_index + 1
+            end
+        end
+    end
+    
+    -- Sort the table
+    table.sort(choices)
+    
+    -- Use telescope directly for selection
+    local opts = {
+        prompt_title = "Select file type for text search",
+        results_title = false,
+        finder = require("telescope.finders").new_table({
+            results = choices,
+            entry_maker = function(entry)
+                local display, icon
+                if categories[entry] then
+                    display = "📁 " .. entry .. " (" .. table.concat(categories[entry], ", ") .. ")"
+                    icon = "📁"
+                else
+                    display = "📄 ." .. entry
+                    icon = "📄"
+                end
+                return {
+                    value = entry,
+                    display = display,
+                    ordinal = entry,
+                    icon = icon
+                }
+            end
+        }),
+        sorter = require("telescope.sorters").get_generic_fuzzy_sorter(),
+        attach_mappings = function(prompt_bufnr, map)
+            local actions = require("telescope.actions")
+            actions.select_default:replace(function()
+                local selection = require("telescope.actions.state").get_selected_entry()
+                actions.close(prompt_bufnr)
+                
+                -- Make sure we have a selection
+                if not selection then return end
+                
+                local choice = selection.value
+                local extensions = {}
+                
+                if categories[choice] then
+                    -- Selected a category
+                    extensions = categories[choice]
+                else
+                    -- Selected a specific extension
+                    extensions = { choice }
+                end
+                
+                -- Build glob patterns for ripgrep
+                local glob_args = {}
+                for _, ext in ipairs(extensions) do
+                    table.insert(glob_args, "--glob")
+                    table.insert(glob_args, "*." .. ext)
+                end
+                
+                -- Use live_grep with the pattern
+                require("telescope.builtin").live_grep({
+                    prompt_title = "Search in " .. choice .. " files",
+                    additional_args = function()
+                        local args = {}
+                        -- Add each glob pattern separately
+                        for _, ext in ipairs(extensions) do
+                            table.insert(args, "--glob")
+                            table.insert(args, "*." .. ext)
+                        end
+                        return args
+                    end,
+                    layout_config = {
+                        width = 0.8,
+                        height = 0.9,
+                    },
+                })
+            end)
+            return true
+        end,
+        layout_config = {
+            width = 0.8,
+            height = 0.9,
+        }
+    }
+    
+    require("telescope.pickers").new({}, opts):find()
 end
 
 -- Make functions available globally
