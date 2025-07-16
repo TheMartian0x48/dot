@@ -134,4 +134,37 @@ return {
             })
         end,
     },
+    
+    -- GitHub Copilot
+    {
+        "github/copilot.vim",
+        event = "InsertEnter",
+        config = function()
+            -- Enable Copilot for specific filetypes
+            vim.g.copilot_filetypes = {
+                ["*"] = true,
+                ["markdown"] = true,
+                ["yaml"] = true,
+                ["help"] = false,
+                ["gitcommit"] = false,
+                ["gitrebase"] = false,
+                ["hgcommit"] = false,
+                ["svn"] = false,
+                ["cvs"] = false,
+            }
+            
+            -- Customize key mappings for Copilot
+            vim.g.copilot_no_tab_map = true -- Disable Tab for suggestions
+            vim.api.nvim_set_keymap("i", "<C-j>", 'copilot#Accept("<CR>")', { expr = true, silent = true })
+            
+            -- Additional Copilot settings
+            vim.g.copilot_assume_mapped = true
+            vim.g.copilot_tab_fallback = ""
+            
+            -- For diagnostic messages
+            vim.cmd([[
+                highlight CopilotSuggestion guifg=#555555 ctermfg=8
+            ]])
+        end,
+    },
 }

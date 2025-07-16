@@ -5,7 +5,6 @@ local M = {}
 
 -- Configuration
 local config = {
-    -- File to store notes (using .md extension for proper markdown recognition)
     notes_file = vim.fn.stdpath("data") .. "/stickynotes.md",
     -- Window configuration
     window = {

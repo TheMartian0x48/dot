@@ -299,7 +299,7 @@ vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
 
 -- Disable completion in certain contexts
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "gitcommit", "markdown", "text" },
+    pattern = { "gitcommit", "text" },
     callback = function()
         require("cmp").setup.buffer({
             enabled = false

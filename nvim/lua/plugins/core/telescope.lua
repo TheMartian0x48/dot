@@ -122,7 +122,6 @@ telescope.setup({
     pickers = {
         -- Buffer picker
         buffers = {
-            theme = "cursor",
             previewer = false,
             layout_config = {
                 width = 0.7,
@@ -229,10 +228,9 @@ telescope.setup({
         -- Colorscheme picker
         colorscheme = {
             enable_preview = true,
-            theme = "cursor",
             layout_config = {
-                width = 0.5,
-                height = 0.4,
+                width = 0.8,
+                height = 0.8,
             },
         },
     },

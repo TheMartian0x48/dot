@@ -92,12 +92,13 @@ opt.autowrite = true       -- Auto-save before switching buffers
 opt.spelllang = "en_us"    -- Spell check language
 opt.spelloptions = "camel" -- Check camelCase words separately
 
--- Folding
-g.markdown_folding = 1 -- enable markdown folding
-opt.foldenable = false
-opt.foldlevel = 99
+
+-- Folding - Updated configuration
+opt.foldenable = true
 opt.foldmethod = "expr"
-opt.foldexpr = "nvim_treesitter#foldexpr()"
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"  -- Updated syntax
+opt.foldlevel = 99
+opt.foldlevelstart = 99
 
 -- Colorscheme settings
 g.gruvbox_baby_background_color = "dark"

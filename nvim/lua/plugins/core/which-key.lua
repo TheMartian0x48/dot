@@ -80,6 +80,13 @@ wk.setup({
 
 -- Register key mappings with descriptions
 wk.add({
+    -- GitHub Copilot
+    { "<leader>a", group = "🤖 AI (Copilot)" },
+    { "<leader>ae", "<cmd>Copilot enable<cr>", desc = "Enable Copilot" },
+    { "<leader>ad", "<cmd>Copilot disable<cr>", desc = "Disable Copilot" },
+    { "<leader>at", "<cmd>Copilot status<cr>", desc = "Copilot Status" },
+    { "<leader>ap", "<cmd>Copilot panel<cr>", desc = "Open Suggestions Panel" },
+
     -- File operations (completely redesigned)
     { "<leader>f", group = "📁 File" },
 
@@ -476,23 +483,6 @@ wk.add({
 
     -- Custom Command (moved from tcc to tc)
     { "<leader>tc", terminal.custom_command, desc = "Custom Command" },
-
-    -- File/Text Processing Utilities
-    { "<leader>tu", group = "🔧 Utilities" },
-    { "<leader>tuj", terminal.jq, desc = "Jq (JSON Processor)" },
-    { "<leader>tuy", terminal.yq, desc = "Yq (YAML Processor)" },
-    { "<leader>tux", terminal.xsv, desc = "Xsv (CSV Toolkit)" },
-    { "<leader>tuf", terminal.fzf, desc = "Fzf (Fuzzy Finder)" },
-    { "<leader>tur", terminal.ripgrep, desc = "Ripgrep" },
-    { "<leader>tub", terminal.bat, desc = "Bat (Enhanced Cat)" },
-
-    -- Network Tools
-    { "<leader>tw", group = "🌐 Network Tools" },
-    { "<leader>twc", terminal.curl, desc = "Curl" },
-    { "<leader>twh", terminal.httpie, desc = "HTTPie" },
-    { "<leader>twn", terminal.nmap, desc = "Nmap" },
-    { "<leader>twp", terminal.ping, desc = "Ping" },
-    { "<leader>twt", terminal.traceroute, desc = "Traceroute" },
 
     -- Window management with Ctrl
     { "<C-h>", "<C-w>h", desc = "Go to Left Window", mode = { "n", "t" } },

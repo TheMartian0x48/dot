@@ -20,7 +20,6 @@ require("mason-lspconfig").setup({
         "clangd", -- cpp, c
         "elixirls",
         "gopls",
-        "golangci_lint_ls",
         "jsonls",
         "rust_analyzer",
         "templ",
@@ -32,7 +31,6 @@ require("mason-lspconfig").setup({
         "bashls",   -- Bash
         "yamlls",   -- YAML
         "dockerls", -- Docker
-        "marksman", -- Markdown
     },
     automatic_installation = true,
 })
@@ -195,9 +193,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
             "dockerfile", "yaml", "yml", "toml", "xml", "ini",
             "terraform", "hcl",
 
-            -- Documentation & Config
-            "markdown", "md",
-
             -- Database & Query
             "sql",
 
@@ -306,7 +301,7 @@ lsp_config.gopls.setup({
     end,
 
     -- Ensure correct command and path
-    cmd = { vim.fn.expand("~/.local/share/nvim/mason/bin/gopls") },
+    cmd = { "gopls" }, 
 
     -- Explicit filetypes
     filetypes = { "go", "gomod", "gowork", "gotmpl" },
@@ -439,10 +434,6 @@ lsp_config.elixirls.setup({
     on_attach = on_attach,
 })
 
-lsp_config.golangci_lint_ls.setup({
-    capabilities = capabilities,
-    on_attach = on_attach,
-})
 
 lsp_config.templ.setup({
     capabilities = capabilities,
@@ -514,11 +505,6 @@ lsp_config.dockerls.setup({
     on_attach = on_attach,
 })
 
--- Markdown
-lsp_config.marksman.setup({
-    capabilities = capabilities,
-    on_attach = on_attach,
-})
 
 -- Export functions for use by other plugins
 return {

@@ -17,6 +17,14 @@ return {
             require("plugins.ui.colorscheme")
         end,
     },
+    {
+        "rebelot/kanagawa.nvim",
+        priority = 1000,
+    },
+    {
+        "sainnhe/everforest",
+        priority = 1000,
+    },
 
     -- Icons
     {

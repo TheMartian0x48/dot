@@ -1,5 +1,5 @@
 -- Enhanced nvim-treesitter configuration with comprehensive language support
-require('nvim-treesitter.configs').setup({
+local config = {
     -- Comprehensive list of parsers for modern development
     ensure_installed = {
         -- Core languages
@@ -18,7 +18,7 @@ require('nvim-treesitter.configs').setup({
         "terraform", "hcl", "nginx",
 
         -- Documentation & Config
-        "markdown", "markdown_inline", "gitignore", "gitcommit", "gitattributes",
+        "gitignore", "gitcommit", "gitattributes",
 
         -- Database & Query
         "sql", "query",
@@ -48,8 +48,6 @@ require('nvim-treesitter.configs').setup({
                 return true
             end
         end,
-        -- Enable additional vim regex highlighting
-        additional_vim_regex_highlighting = { "markdown" },
     },
 
     -- Smart indentation
@@ -135,7 +133,8 @@ require('nvim-treesitter.configs').setup({
 
     -- Enhanced folding
     fold = {
-        enable = false, -- Disable as it can cause issues
+        enable = true, -- Enable treesitter folding
+        disable = {},  -- Remove any disabled languages
     },
 
     -- Rainbow parentheses (requires nvim-ts-rainbow or similar plugin)
@@ -184,4 +183,6 @@ require('nvim-treesitter.configs').setup({
     --         show_help = '?',
     --     },
     -- },
-})
+}
+
+require('nvim-treesitter.configs').setup(config)

@@ -1,28 +1,38 @@
 -- none-ls configuration for enhanced formatting and linting
-local null_ls = require("null-ls")
+local none_ls = require("null-ls")
 
 -- Go-specific formatters and tools
 local go_sources = {
     -- Go formatting with goimports (handles imports + formatting)
-    null_ls.builtins.formatting.goimports.with({
+    none_ls.builtins.formatting.goimports.with({
         extra_args = { "-local", "github.com" }, -- Adjust this to your project's module path
     }),
 
     -- Go line length management
-    null_ls.builtins.formatting.golines.with({
+    none_ls.builtins.formatting.golines.with({
         extra_args = { "--max-len=120", "--base-formatter=goimports" },
     }),
 
-    -- Additional Go linting (golangci-lint is already handled by LSP)
-    null_ls.builtins.diagnostics.golangci_lint.with({
-        extra_args = { "--fast" },
-    }),
+    -- Go doc comments - improves godoc formatting
+    none_ls.builtins.formatting.godoc,
+
+    -- Go struct tags management
+    none_ls.builtins.formatting.gotests,
+
+    -- Go test generation - automatically generate test stubs
+    none_ls.builtins.code_actions.gomodifytags,
+
+    -- Go error handling - implements error handling
+    none_ls.builtins.code_actions.impl,
+
+    -- Go test coverage - show test coverage info
+    none_ls.builtins.diagnostics.staticcheck,
 }
 
 -- JavaScript/Web development sources
 local web_sources = {
     -- JavaScript/JSON formatting (using prettier if available)
-    null_ls.builtins.formatting.prettier.with({
+    none_ls.builtins.formatting.prettier.with({
         filetypes = { "javascript", "javascriptreact", "json", "jsonc", "html", "css" },
         extra_args = { "--single-quote", "--trailing-comma", "es5" },
     }),
@@ -31,15 +41,12 @@ local web_sources = {
 -- General sources
 local general_sources = {
     -- Lua formatting
-    null_ls.builtins.formatting.stylua,
+    none_ls.builtins.formatting.stylua,
 
     -- Shell script formatting
-    null_ls.builtins.formatting.shfmt.with({
+    none_ls.builtins.formatting.shfmt.with({
         extra_args = { "-i", "2", "-ci" }, -- 2 spaces, indent switch cases
     }),
-
-    -- Markdown formatting
-    null_ls.builtins.formatting.markdownlint,
 }
 
 -- Combine all sources
@@ -48,7 +55,7 @@ vim.list_extend(sources, go_sources)
 vim.list_extend(sources, web_sources)
 vim.list_extend(sources, general_sources)
 
-null_ls.setup({
+none_ls.setup({
     sources = sources,
 
     -- Enhanced formatting on save
@@ -60,11 +67,12 @@ null_ls.setup({
                     vim.lsp.buf.format({
                         bufnr = bufnr,
                         filter = function(formatting_client)
-                            -- Prefer none-ls for Go files
-                            if vim.bo[bufnr].filetype == "go" then
-                                return formatting_client.name == "null-ls"
-                            end
-                            return true
+                        -- Prefer none-ls for Go files
+                        if vim.bo[bufnr].filetype == "go" then
+                            -- The plugin identifies itself as null-ls for compatibility
+                            return formatting_client.name == "null-ls"
+                        end
+                        return true
                         end,
                     })
                 end,
