@@ -200,6 +200,7 @@ telescope.setup({
                 width = 0.8,
                 height = 0.5,
             },
+            symbol_width = 60,
         },
 
         lsp_workspace_symbols = {

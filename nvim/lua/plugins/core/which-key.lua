@@ -244,8 +244,10 @@ wk.add({
     { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics" },
     { "<leader>xL", "<cmd>Trouble loclist toggle<cr>", desc = "Location List" },
     { "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix List" },
-    { "<leader>xn", function() vim.diagnostic.goto({ direction = "next" }) end, desc = "Next Diagnostic" },
-    { "<leader>xp", function() vim.diagnostic.goto({ direction = "prev" }) end, desc = "Previous Diagnostic" },
+    { "<leader>xn", function() vim.diagnostic.goto_next() end, desc = "Next Diagnostic" },
+    { "<leader>xp", function() vim.diagnostic.goto_prev() end, desc = "Previous Diagnostic" },
+    { "<leader>xt", "<cmd>TodoTrouble<cr>",                              desc = "Todo (Trouble)" },
+    { "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>",      desc = "Todo/Fix/Fixme (Trouble)" },
 })
 
 wk.add({
@@ -503,7 +505,9 @@ wk.add({
     { "<M-k>", "<cmd>cprev<cr>", desc = "Previous Quickfix Item" },
 
     { "<C-s>", "<cmd>w<cr>", desc = "Save File", mode = { "n", "i", "v" } },
+})
 
+wk.add({
     { "<leader>1", function() navigation.goto_buffer(1) end, desc = "Buffer 1" },
     { "<leader>2", function() navigation.goto_buffer(2) end, desc = "Buffer 2" },
     { "<leader>3", function() navigation.goto_buffer(3) end, desc = "Buffer 3" },
@@ -514,14 +518,20 @@ wk.add({
     { "<leader>8", function() navigation.goto_buffer(8) end, desc = "Buffer 8" },
     { "<leader>9", function() navigation.goto_buffer(9) end, desc = "Buffer 9" },
     { "<leader>0", function() navigation.goto_last_buffer() end, desc = "Last Buffer" },
+})
 
+wk.add({
+    { "]d", function() vim.diagnostic.goto_next() end, desc = "Next Diagnostic" },
+    { "[d", function() vim.diagnostic.goto_prev() end, desc = "Previous Diagnostic" },
+    { "]e", function() vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR }) end, desc = "Next Error" },
+    { "[e", function() vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR }) end, desc = "Previous Error" },
+    { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
+    { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
+    { "]w", function() vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN }) end, desc = "Next Warning" },
+    { "[w", function() vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN }) end, desc = "Previous Warning" },
+})
 
-    { "]d", function() vim.diagnostic.goto({ direction = "next" }) end, desc = "Next Diagnostic" },
-    { "[d", function() vim.diagnostic.goto({ direction = "prev" }) end, desc = "Previous Diagnostic" },
-    { "]e", function() vim.diagnostic.goto({ direction = "next", severity = vim.diagnostic.severity.ERROR }) end, desc = "Next Error" },
-    { "[e", function() vim.diagnostic.goto({ direction = "prev", severity = vim.diagnostic.severity.ERROR }) end, desc = "Previous Error" },
-    { "]w", function() vim.diagnostic.goto({ direction = "next", severity = vim.diagnostic.severity.WARN }) end, desc = "Next Warning" },
-    { "[w", function() vim.diagnostic.goto({ direction = "prev", severity = vim.diagnostic.severity.WARN }) end, desc = "Previous Warning" },
+wk.add({
 
     { "n", "nzzzv", desc = "Next Search (Centered)" },
     { "N", "Nzzzv", desc = "Previous Search (Centered)" },
