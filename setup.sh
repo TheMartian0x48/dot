@@ -167,6 +167,7 @@ log_header "📦 PACKAGE INSTALLATION"
 echo -e "  ${CYAN}📱 Installing terminal applications...${NC}"
 install_package "alacritty" "alacritty" "--cask"
 install_package "tmux" "tmux"
+install_package "nushell" "nushell"
 
 # Editors & Development
 echo -e "  ${CYAN}⚡ Installing development tools...${NC}"
@@ -253,6 +254,7 @@ configs=(
     "tmux:$CONFIG_DIR/tmux"
     "btop:$CONFIG_DIR/btop"
     "neofetch:$CONFIG_DIR/neofetch"
+    "nu:$CONFIG_DIR/nushell"
 )
 
 for config in "${configs[@]}"; do
@@ -273,6 +275,31 @@ fi
 
 post_install_setup() {
     log_header "⚙️  POST-INSTALLATION SETUP"
+    
+    # Setup Nushell configuration
+    log_step "Setting up Nushell configuration..."
+    mkdir -p "$HOME/Library/Application Support/nushell"
+    ln -sf "$DOTFILES_DIR/nushell/config.nu" "$HOME/Library/Application Support/nushell/config.nu"
+    ln -sf "$DOTFILES_DIR/nushell/env.nu" "$HOME/Library/Application Support/nushell/env.nu"
+    
+    # Update Ghostty config for Nushell
+    if [[ -f "$CONFIG_DIR/ghostty/config" ]]; then
+        log_step "Configuring Ghostty to use Nushell..."
+        if ! grep -q "command = \"/opt/homebrew/bin/nu --config" "$CONFIG_DIR/ghostty/config"; then
+            # Check if command line already exists and update it
+            if grep -q "command = " "$CONFIG_DIR/ghostty/config"; then
+                sed -i '' 's|command = .*|command = "/opt/homebrew/bin/nu --config '$DOTFILES_DIR'/nushell/config.nu --env-config '$DOTFILES_DIR'/nushell/env.nu"|g' "$CONFIG_DIR/ghostty/config"
+            else
+                # Add command line if it doesn't exist
+                echo 'command = "/opt/homebrew/bin/nu --config '$DOTFILES_DIR'/nushell/config.nu --env-config '$DOTFILES_DIR'/nushell/env.nu"' >> "$CONFIG_DIR/ghostty/config"
+            fi
+            log_success "Ghostty configured to use Nushell with custom config paths"
+        else
+            log_info "Ghostty already configured for Nushell"
+        fi
+    fi
+    
+    log_success "Nushell configuration completed"
     
     # Setup zoxide
     if command -v zoxide &> /dev/null; then
@@ -302,6 +329,13 @@ post_install_setup() {
                 fi
             fi
         fi
+    fi
+    
+    # Setup Nushell configuration
+    if command -v nu &> /dev/null; then
+        log_step "Setting up Nushell..."
+        mkdir -p "$HOME/.config/nushell"
+        log_success "Nushell configuration is ready to use"
     fi
     
     echo ""

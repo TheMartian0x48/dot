@@ -1,0 +1,14 @@
+# Appearance
+# font-family = "mononoki"
+font-family = "Iosevka Term"
+font-family-bold = "Iosevka Term Semibold"
+font-family-italic = "Iosevka Term Italic"
+font-family-bold-italic = "Iosevka Term Semibold Italic"
+font-size = 16
+background-opacity = 0.95
+# window-padding-x = 10
+# window-padding-y = 10
+# theme = catppuccin-frappe
+# theme = GruvboxLightHard
+# theme = gruvbox-material
+theme = GruvboxDarkHard

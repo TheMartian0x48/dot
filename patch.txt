@@ -1,0 +1,94 @@
+diff --git a/nvim/lua/plugins/dev/lsp.lua b/nvim/lua/plugins/dev/lsp.lua
+index c80c5c8..3e0e5c8 100644
+--- a/nvim/lua/plugins/dev/lsp.lua
++++ b/nvim/lua/plugins/dev/lsp.lua
+@@ -259,10 +259,11 @@ lsp_config.cssls.setup({
+     }
+ })
+ 
+--- C/C++
++-- C/C++ with single instance enforcement
+ lsp_config.clangd.setup({
+     capabilities = capabilities,
+     on_attach = on_attach,
++    single_file_support = false, -- Prevent starting for isolated files
+     cmd = {
+         "clangd",
+         "--background-index",
+@@ -272,6 +273,17 @@ lsp_config.clangd.setup({
+         "--function-arg-placeholders",
+         "--fallback-style=llvm",
+     },
++    root_dir = function(fname)
++        return util.root_pattern(
++            "compile_commands.json",
++            "compile_flags.txt",
++            ".clangd",
++            "CMakeLists.txt",
++            "Makefile",
++            "configure.ac",
++            ".git"
++        )(fname) or util.find_git_ancestor(fname)
++    end,
+     init_options = {
+         usePlaceholders = true,
+         completeUnimported = true,
+@@ -508,8 +520,58 @@ lsp_config.marksman.setup({
+     on_attach = on_attach,
+ })
+ 
++-- LSP Management Utilities
++local M = {}
++
++-- Function to stop all instances of a specific LSP server
++M.stop_lsp_server = function(server_name)
++    local clients = vim.lsp.get_clients({ name = server_name })
++    for _, client in ipairs(clients) do
++        client.stop()
++        print("Stopped " .. server_name .. " client (id: " .. client.id .. ")")
++    end
++end
++
++-- Function to restart a specific LSP server
++M.restart_lsp_server = function(server_name)
++    M.stop_lsp_server(server_name)
++    vim.defer_fn(function()
++        vim.cmd("LspStart " .. server_name)
++    end, 1000)
++end
++
++-- Function to list all active LSP clients
++M.list_lsp_clients = function()
++    local clients = vim.lsp.get_clients()
++    if #clients == 0 then
++        print("No active LSP clients")
++        return
++    end
++    print("Active LSP clients:")
++    for _, client in ipairs(clients) do
++        print("  - " .. client.name .. " (id: " .. client.id .. ") - " .. (client.root_dir or "no root"))
++    end
++end
++
++-- Create user commands for LSP management
++vim.api.nvim_create_user_command('LspStopServer', function(opts)
++    M.stop_lsp_server(opts.args)
++end, { nargs = 1, desc = 'Stop all instances of an LSP server' })
++
++vim.api.nvim_create_user_command('LspRestartServer', function(opts)
++    M.restart_lsp_server(opts.args)
++end, { nargs = 1, desc = 'Restart an LSP server' })
++
++vim.api.nvim_create_user_command('LspList', function()
++    M.list_lsp_clients()
++end, { desc = 'List all active LSP clients' })
++
+ -- Export functions for use by other plugins
+ return {
+     on_attach = on_attach,
+     capabilities = capabilities,
++    stop_lsp_server = M.stop_lsp_server,
++    restart_lsp_server = M.restart_lsp_server,
++    list_lsp_clients = M.list_lsp_clients,
+ }
+

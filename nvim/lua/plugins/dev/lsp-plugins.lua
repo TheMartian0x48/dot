@@ -12,16 +12,4 @@ return {
             require("plugins.dev.java")
         end,
     },
-
-    -- Formatting and linting with none-ls
-    {
-        "nvimtools/none-ls.nvim",
-        dependencies = {
-            "nvimtools/none-ls-extras.nvim",
-            "nvim-lua/plenary.nvim", -- Required dependency
-        },
-        config = function()
-            require("plugins.dev.none-ls")
-        end,
-    },
 }

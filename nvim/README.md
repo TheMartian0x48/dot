@@ -72,7 +72,6 @@ nvim  # Will automatically install plugins on first run
 | **mason.nvim** | LSP installer | Automatic LSP/tool installation |
 | **nvim-dap** | Debugging | Debug adapter protocol |
 | **gitsigns.nvim** | Git integration | Git hunks, blame, diff |
-| **none-ls.nvim** | Formatting/Linting | Code formatting and linting |
 
 ### 📝 Productivity
 | Plugin | Purpose | Key Features |
@@ -116,7 +115,6 @@ nvim/
 │       │   ├── lsp.lua           # Language servers
 │       │   ├── dap.lua           # Debugging
 │       │   ├── git.lua           # Git integration
-│       │   └── none-ls.lua       # Formatting/linting
 │       └── 📁 productivity/      # Productivity tools
 │           ├── init.lua          # Productivity loader
 │           └── stickynotes.lua   # Note-taking

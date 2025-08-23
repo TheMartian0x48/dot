@@ -22,7 +22,7 @@ wk.setup({
         title_pos = "center",
         zindex = 1000,
         wo = {
-            winblend = 0, 
+            winblend = 0,
         },
     },
     layout = {
@@ -246,8 +246,8 @@ wk.add({
     { "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix List" },
     { "<leader>xn", function() vim.diagnostic.goto_next() end, desc = "Next Diagnostic" },
     { "<leader>xp", function() vim.diagnostic.goto_prev() end, desc = "Previous Diagnostic" },
-    { "<leader>xt", "<cmd>TodoTrouble<cr>",                              desc = "Todo (Trouble)" },
-    { "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>",      desc = "Todo/Fix/Fixme (Trouble)" },
+    { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
+    { "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
 })
 
 wk.add({
@@ -480,55 +480,55 @@ wk.add({
 
 wk.add({
 
-    { "<C-h>", "<C-w>h", desc = "Go to Left Window", mode = { "n", "t" } },
-    { "<C-j>", "<C-w>j", desc = "Go to Lower Window", mode = { "n", "t" } },
-    { "<C-k>", "<C-w>k", desc = "Go to Upper Window", mode = { "n", "t" } },
-    { "<C-l>", "<C-w>l", desc = "Go to Right Window", mode = { "n", "t" } },
+    { "<C-h>",      "<C-w>h",                             desc = "Go to Left Window",         mode = { "n", "t" } },
+    { "<C-j>",      "<C-w>j",                             desc = "Go to Lower Window",        mode = { "n", "t" } },
+    { "<C-k>",      "<C-w>k",                             desc = "Go to Upper Window",        mode = { "n", "t" } },
+    { "<C-l>",      "<C-w>l",                             desc = "Go to Right Window",        mode = { "n", "t" } },
 
-    { "<C-Up>", "<cmd>resize +2<cr>", desc = "Increase Window Height" },
-    { "<C-Down>", "<cmd>resize -2<cr>", desc = "Decrease Window Height" },
-    { "<C-Left>", "<cmd>vertical resize -2<cr>", desc = "Decrease Window Width" },
-    { "<C-Right>", "<cmd>vertical resize +2<cr>", desc = "Increase Window Width" },
+    { "<C-Up>",     "<cmd>resize +2<cr>",                 desc = "Increase Window Height" },
+    { "<C-Down>",   "<cmd>resize -2<cr>",                 desc = "Decrease Window Height" },
+    { "<C-Left>",   "<cmd>vertical resize -2<cr>",        desc = "Decrease Window Width" },
+    { "<C-Right>",  "<cmd>vertical resize +2<cr>",        desc = "Increase Window Width" },
 
-    { "<Tab>", "<cmd>bnext<cr>", desc = "Next Buffer" },
-    { "<S-Tab>", "<cmd>bprev<cr>", desc = "Previous Buffer" },
+    { "<Tab>",      "<cmd>bnext<cr>",                     desc = "Next Buffer" },
+    { "<S-Tab>",    "<cmd>bprev<cr>",                     desc = "Previous Buffer" },
 
-    { "<Esc><Esc>", "<C-\\><C-n>", desc = "Exit Terminal Mode", mode = "t" },
+    { "<Esc><Esc>", "<C-\\><C-n>",                        desc = "Exit Terminal Mode",        mode = "t" },
 
-    { "<Esc>", "<cmd>nohlsearch<cr><cmd>redraw<cr>", desc = "Clear Search & Redraw" },
-    { "<leader>h", "<cmd>nohlsearch<cr>", desc = "Clear Search Highlight" },
+    { "<Esc>",      "<cmd>nohlsearch<cr><cmd>redraw<cr>", desc = "Clear Search & Redraw" },
+    { "<leader>h",  "<cmd>nohlsearch<cr>",                desc = "Clear Search Highlight" },
 
-    { "<C-d>", navigation.smart_scroll_down, desc = "Smart Scroll Down & Center" },
-    { "<C-u>", navigation.smart_scroll_up, desc = "Smart Scroll Up & Center" },
+    { "<C-d>",      navigation.smart_scroll_down,         desc = "Smart Scroll Down & Center" },
+    { "<C-u>",      navigation.smart_scroll_up,           desc = "Smart Scroll Up & Center" },
 
-    { "<M-j>", "<cmd>cnext<cr>", desc = "Next Quickfix Item" },
-    { "<M-k>", "<cmd>cprev<cr>", desc = "Previous Quickfix Item" },
+    { "<M-j>",      "<cmd>cnext<cr>",                     desc = "Next Quickfix Item" },
+    { "<M-k>",      "<cmd>cprev<cr>",                     desc = "Previous Quickfix Item" },
 
-    { "<C-s>", "<cmd>w<cr>", desc = "Save File", mode = { "n", "i", "v" } },
+    { "<C-s>",      "<cmd>w<cr>",                         desc = "Save File",                 mode = { "n", "i", "v" } },
 })
 
 wk.add({
-    { "<leader>1", function() navigation.goto_buffer(1) end, desc = "Buffer 1" },
-    { "<leader>2", function() navigation.goto_buffer(2) end, desc = "Buffer 2" },
-    { "<leader>3", function() navigation.goto_buffer(3) end, desc = "Buffer 3" },
-    { "<leader>4", function() navigation.goto_buffer(4) end, desc = "Buffer 4" },
-    { "<leader>5", function() navigation.goto_buffer(5) end, desc = "Buffer 5" },
-    { "<leader>6", function() navigation.goto_buffer(6) end, desc = "Buffer 6" },
-    { "<leader>7", function() navigation.goto_buffer(7) end, desc = "Buffer 7" },
-    { "<leader>8", function() navigation.goto_buffer(8) end, desc = "Buffer 8" },
-    { "<leader>9", function() navigation.goto_buffer(9) end, desc = "Buffer 9" },
+    { "<leader>1", function() navigation.goto_buffer(1) end,     desc = "Buffer 1" },
+    { "<leader>2", function() navigation.goto_buffer(2) end,     desc = "Buffer 2" },
+    { "<leader>3", function() navigation.goto_buffer(3) end,     desc = "Buffer 3" },
+    { "<leader>4", function() navigation.goto_buffer(4) end,     desc = "Buffer 4" },
+    { "<leader>5", function() navigation.goto_buffer(5) end,     desc = "Buffer 5" },
+    { "<leader>6", function() navigation.goto_buffer(6) end,     desc = "Buffer 6" },
+    { "<leader>7", function() navigation.goto_buffer(7) end,     desc = "Buffer 7" },
+    { "<leader>8", function() navigation.goto_buffer(8) end,     desc = "Buffer 8" },
+    { "<leader>9", function() navigation.goto_buffer(9) end,     desc = "Buffer 9" },
     { "<leader>0", function() navigation.goto_last_buffer() end, desc = "Last Buffer" },
 })
 
 wk.add({
-    { "]d", function() vim.diagnostic.goto_next() end, desc = "Next Diagnostic" },
-    { "[d", function() vim.diagnostic.goto_prev() end, desc = "Previous Diagnostic" },
+    { "]d", function() vim.diagnostic.goto_next() end,                                             desc = "Next Diagnostic" },
+    { "[d", function() vim.diagnostic.goto_prev() end,                                             desc = "Previous Diagnostic" },
     { "]e", function() vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR }) end, desc = "Next Error" },
     { "[e", function() vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR }) end, desc = "Previous Error" },
-    { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
-    { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous todo comment" },
-    { "]w", function() vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN }) end, desc = "Next Warning" },
-    { "[w", function() vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN }) end, desc = "Previous Warning" },
+    { "]t", function() require("todo-comments").jump_next() end,                                   desc = "Next todo comment" },
+    { "[t", function() require("todo-comments").jump_prev() end,                                   desc = "Previous todo comment" },
+    { "]w", function() vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN }) end,  desc = "Next Warning" },
+    { "[w", function() vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN }) end,  desc = "Previous Warning" },
 })
 
 wk.add({

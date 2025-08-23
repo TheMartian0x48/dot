@@ -1,4 +1,5 @@
 -- Enhanced LSP Configuration with comprehensive language support
+
 require("mason").setup({
     ui = {
         border = "rounded",
@@ -6,29 +7,38 @@ require("mason").setup({
         icons = {
             package_installed = "✓",
             package_pending = "➜",
-            package_uninstalled = "✗",
-        },
-    },
+            package_uninstalled = "✗"
+        }
+    }
 })
 
 require("mason-lspconfig").setup({
     ensure_installed = {
-        -- Core languages
-        "lua_ls",
-        "html",
-        "cssls",
         "clangd",
+        "lua_ls",
         "gopls",
+        "golangci_lint_ls",
         "jsonls",
         "templ",
-
-        "pyright",  -- Python
-        "ts_ls",    -- JavaScript only (no TypeScript)
-        "bashls",   -- Bash
-        "yamlls",   -- YAML
-        "dockerls", -- Docker
+        "jdtls",
+        "ols",
+        "zls",
+        "marksman",
     },
-    automatic_installation = false,
+    automatic_installation = true,
+    automatic_enable = {
+        exclude = {
+            "ols",
+            "clangd",
+            "lua_ls",
+            "gopls",
+            "golangci_lint_ls",
+            "jsonls",
+            "templ",
+            "jdtls",
+            "marksman",
+        }
+    }
 })
 
 -- Ensure Go development tools are installed
@@ -47,6 +57,10 @@ for _, tool in ipairs(go_tools) do
     end
 end
 
+local elixir_ls_path = vim.fn.expand("~/.local/share/elixir-ls")
+local elixir_cmd = { elixir_ls_path .. "/language_server.sh" }
+
+-- Enhanced border configuration
 local border = {
     { "╭", "FloatBorder" },
     { "─", "FloatBorder" },
@@ -92,7 +106,7 @@ vim.diagnostic.config({
         source = "always",
         header = "",
         prefix = "",
-        winblend = 0,
+        winblend = 0, -- No transparency (opaque)
     },
 })
 
@@ -122,6 +136,8 @@ local on_attach = function(client, bufnr)
     map("n", "[d", vim.diagnostic.goto_prev, "Previous diagnostic")
     map("n", "]d", vim.diagnostic.goto_next, "Next diagnostic")
 
+
+
     -- Highlight symbol under cursor
     if client.server_capabilities.documentHighlightProvider then
         local group = vim.api.nvim_create_augroup("lsp_document_highlight", { clear = false })
@@ -148,87 +164,66 @@ end
 
 -- Enhanced capabilities with additional features
 local lsp_config = require("lspconfig")
+local util = require("lspconfig.util")
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 -- Add snippet support
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.resolveSupport = {
-    properties = { "documentation", "detail", "additionalTextEdits" },
+    properties = { "documentation", "detail", "additionalTextEdits" }
 }
 
 -- Add folding capabilities
 capabilities.textDocument.foldingRange = {
     dynamicRegistration = false,
-    lineFoldingOnly = true,
+    lineFoldingOnly = true
 }
 
-vim.api.nvim_create_autocmd("LspAttach", {
+-- Auto-format on save with better error handling
+vim.api.nvim_create_autocmd('LspAttach', {
     callback = function(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)
-        if not client then
-            return
-        end
+        if not client then return end
 
         -- Format on save for specific filetypes (JavaScript only, no TypeScript)
         local format_on_save_filetypes = {
             -- Core languages
-            "bash",
-            "sh",
-            "c",
-            "cpp",
-            "css",
-            "html",
-            "lua",
-            "vim",
+            "bash", "sh", "c", "cpp", "css", "html", "lua", "vim",
 
             -- Web development (JavaScript only, no TypeScript)
-            "javascript",
-            "javascriptreact",
-            "json",
-            "jsonc",
+            "javascript", "javascriptreact", "json", "jsonc",
 
             -- Backend languages
-            "python",
-            "go",
-            "rust",
-            "java",
-            "elixir",
+            "python", "go", "rust", "java", "elixir",
 
             -- Systems & DevOps
-            "dockerfile",
-            "yaml",
-            "yml",
-            "toml",
-            "xml",
-            "ini",
-            "terraform",
-            "hcl",
+            "dockerfile", "yaml", "yml", "toml", "xml", "ini",
+            "terraform", "hcl",
+
+            -- Documentation & Config
+            "markdown", "md",
 
             -- Database & Query
             "sql",
 
             -- Data & Config formats
-            "csv",
-            "tsv",
+            "csv", "tsv",
 
             -- Other useful formats
-            "make",
-            "makefile",
+            "make", "makefile",
         }
 
-        if
-            client:supports_method("textDocument/formatting")
-            and vim.tbl_contains(format_on_save_filetypes, vim.bo[args.buf].filetype)
-        then
-            vim.api.nvim_create_autocmd("BufWritePre", {
+        if client:supports_method('textDocument/formatting') and
+            vim.tbl_contains(format_on_save_filetypes, vim.bo[args.buf].filetype) then
+            vim.api.nvim_create_autocmd('BufWritePre', {
                 buffer = args.buf,
                 callback = function()
                     local params = vim.lsp.util.make_formatting_params({})
-                    client:request("textDocument/formatting", params, nil, args.buf)
+                    client:request('textDocument/formatting', params, nil, args.buf)
                 end,
             })
         end
-    end,
+    end
 })
 
 -- LSP Server Configurations
@@ -246,17 +241,14 @@ lsp_config.lua_ls.setup({
             },
             telemetry = { enable = false },
             hint = { enable = true },
-            format = {
-                enable = true,
-                defaultConfig = {
-                    indent_style = "space",
-                    indent_size = "4",
-                },
-            },
         },
     },
 })
-
+-- jdtls is configured separately in java.lua
+-- lsp_config.jdtls.setup({
+--     capabilities = capabilities,
+--     on_attach = on_attach,
+-- })
 -- HTML with enhanced capabilities
 lsp_config.html.setup({
     capabilities = capabilities,
@@ -272,22 +264,63 @@ lsp_config.cssls.setup({
         css = {
             validate = true,
             lint = {
-                unknownAtRules = "ignore",
-            },
+                unknownAtRules = "ignore"
+            }
         },
         scss = {
             validate = true,
             lint = {
-                unknownAtRules = "ignore",
-            },
-        },
+                unknownAtRules = "ignore"
+            }
+        }
+    }
+})
+
+lsp_config.zls.setup({
+    capabilities = capabilities,
+    on_attach = on_attach,
+    filetypes = { "zig" },
+    root_dir = lsp_config.util.root_pattern("build.zig"),
+    settings = {},
+})
+
+-- C/C++ with single instance enforcement
+lsp_config.clangd.setup({
+    capabilities = capabilities,
+    on_attach = on_attach,
+    single_file_support = false, -- Prevent starting for isolated files
+    cmd = {
+        "/opt/homebrew/Cellar/llvm/20.1.8/bin/clangd",
+        "--background-index",
+        "--clang-tidy",
+        "--header-insertion=iwyu",
+        "--completion-style=detailed",
+        "--function-arg-placeholders",
+        "--fallback-style=llvm",
+    },
+    root_dir = function(fname)
+        return util.root_pattern(
+            "compile_commands.json",
+            "compile_flags.txt",
+            ".clangd",
+            "CMakeLists.txt",
+            "Makefile",
+            "configure.ac",
+            ".git"
+        )(fname) or util.find_git_ancestor(fname)
+    end,
+    init_options = {
+        usePlaceholders = true,
+        completeUnimported = true,
+        clangdFileStatus = true,
     },
 })
 
--- Golang
+-- Enhanced Go configuration with debugging and better error handling
 lsp_config.gopls.setup({
     capabilities = capabilities,
     on_attach = function(client, bufnr)
+        -- Enable inlay hints for Go if supported
         if client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
             vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
         end
@@ -295,10 +328,14 @@ lsp_config.gopls.setup({
         on_attach(client, bufnr)
     end,
 
-    cmd = { "gopls" },
+    -- Ensure correct command and path
+    cmd = { vim.fn.expand("~/.local/share/nvim/mason/bin/gopls") },
 
+    -- Explicit filetypes
     filetypes = { "go", "gomod", "gowork", "gotmpl" },
 
+
+    -- Enhanced settings
     settings = {
         gopls = {
             analyses = {
@@ -353,12 +390,82 @@ lsp_config.gopls.setup({
     },
 })
 
+-- Rust with enhanced settings
+lsp_config.rust_analyzer.setup({
+    capabilities = capabilities,
+    on_attach = on_attach,
+    settings = {
+        ['rust-analyzer'] = {
+            diagnostics = {
+                enable = true,
+            },
+            cargo = {
+                allFeatures = true,
+                loadOutDirsFromCheck = true,
+                runBuildScripts = true,
+            },
+            procMacro = {
+                enable = true,
+                ignored = {
+                    leptos_macro = {
+                        "component",
+                        "server",
+                    },
+                },
+            },
+            inlayHints = {
+                bindingModeHints = {
+                    enable = false,
+                },
+                chainingHints = {
+                    enable = true,
+                },
+                closingBraceHints = {
+                    enable = true,
+                    minLines = 25,
+                },
+                closureReturnTypeHints = {
+                    enable = "never",
+                },
+                lifetimeElisionHints = {
+                    enable = "never",
+                    useParameterNames = false,
+                },
+                maxLength = 25,
+                parameterHints = {
+                    enable = true,
+                },
+                reborrowHints = {
+                    enable = "never",
+                },
+                renderColons = true,
+                typeHints = {
+                    enable = true,
+                    hideClosureInitialization = false,
+                    hideNamedConstructor = false,
+                },
+            },
+        }
+    }
+})
+
 -- JSON with basic configuration
 lsp_config.jsonls.setup({
     capabilities = capabilities,
     on_attach = on_attach,
 })
 
+-- Remaining existing servers
+lsp_config.elixirls.setup({
+    cmd = elixir_cmd,
+    capabilities = capabilities,
+    on_attach = on_attach,
+})
+
+lsp_config.golangci_lint_ls.setup({
+    capabilities = capabilities,
+    on_attach = on_attach,
+})
 
 lsp_config.templ.setup({
     capabilities = capabilities,
@@ -381,7 +488,7 @@ lsp_config.pyright.setup({
     },
 })
 
--- JavaScript
+-- JavaScript (TypeScript support removed)
 lsp_config.ts_ls.setup({
     capabilities = capabilities,
     on_attach = on_attach,
@@ -430,13 +537,64 @@ lsp_config.dockerls.setup({
     on_attach = on_attach,
 })
 
--- C and C++
-lsp_config.clangd.setup({
+-- Markdown
+lsp_config.marksman.setup({
     capabilities = capabilities,
     on_attach = on_attach,
 })
 
+-- LSP Management Utilities
+local M = {}
+
+-- Function to stop all instances of a specific LSP server
+M.stop_lsp_server = function(server_name)
+    local clients = vim.lsp.get_clients({ name = server_name })
+    for _, client in ipairs(clients) do
+        client.stop()
+        print("Stopped " .. server_name .. " client (id: " .. client.id .. ")")
+    end
+end
+
+-- Function to restart a specific LSP server
+M.restart_lsp_server = function(server_name)
+    M.stop_lsp_server(server_name)
+    vim.defer_fn(function()
+        vim.cmd("LspStart " .. server_name)
+    end, 1000)
+end
+
+-- Function to list all active LSP clients
+M.list_lsp_clients = function()
+    local clients = vim.lsp.get_clients()
+    if #clients == 0 then
+        print("No active LSP clients")
+        return
+    end
+
+    print("Active LSP clients:")
+    for _, client in ipairs(clients) do
+        print("  - " .. client.name .. " (id: " .. client.id .. ") - " .. (client.root_dir or "no root"))
+    end
+end
+
+-- Create user commands for LSP management
+vim.api.nvim_create_user_command('LspStopServer', function(opts)
+    M.stop_lsp_server(opts.args)
+end, { nargs = 1, desc = 'Stop all instances of an LSP server' })
+
+vim.api.nvim_create_user_command('LspRestartServer', function(opts)
+    M.restart_lsp_server(opts.args)
+end, { nargs = 1, desc = 'Restart an LSP server' })
+
+vim.api.nvim_create_user_command('LspList', function()
+    M.list_lsp_clients()
+end, { desc = 'List all active LSP clients' })
+
+-- Export functions for use by other plugins
 return {
     on_attach = on_attach,
     capabilities = capabilities,
+    stop_lsp_server = M.stop_lsp_server,
+    restart_lsp_server = M.restart_lsp_server,
+    list_lsp_clients = M.list_lsp_clients,
 }
