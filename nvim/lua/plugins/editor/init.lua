@@ -134,37 +134,29 @@ return {
             })
         end,
     },
-    
-    -- GitHub Copilot
+
+    -- Markdown rendering
     {
-        "github/copilot.vim",
-        event = "InsertEnter",
+        "MeanderingProgrammer/render-markdown.nvim",
+        ft = "markdown",
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
         config = function()
-            -- Enable Copilot for specific filetypes
-            vim.g.copilot_filetypes = {
-                ["*"] = true,
-                ["markdown"] = true,
-                ["yaml"] = true,
-                ["help"] = false,
-                ["gitcommit"] = false,
-                ["gitrebase"] = false,
-                ["hgcommit"] = false,
-                ["svn"] = false,
-                ["cvs"] = false,
-            }
-            
-            -- Customize key mappings for Copilot
-            vim.g.copilot_no_tab_map = true -- Disable Tab for suggestions
-            vim.api.nvim_set_keymap("i", "<C-j>", 'copilot#Accept("<CR>")', { expr = true, silent = true })
-            
-            -- Additional Copilot settings
-            vim.g.copilot_assume_mapped = true
-            vim.g.copilot_tab_fallback = ""
-            
-            -- For diagnostic messages
-            vim.cmd([[
-                highlight CopilotSuggestion guifg=#555555 ctermfg=8
-            ]])
+            require("render-markdown").setup({
+                heading = {
+                    position = 'inline',
+                    icons = { ' > ', ' >> ', ' >>> ', ' >>>> ', ' >>>>> ', ' >>>>>> ' }
+                },
+
+            })
         end,
+    },
+    {
+        "iamcco/markdown-preview.nvim",
+        cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+        build = "cd app && yarn install",
+        init = function()
+            vim.g.mkdp_filetypes = { "markdown" }
+        end,
+        ft = { "markdown" },
     },
 }
