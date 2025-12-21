@@ -1,0 +1,2 @@
+-- Autocmds
+-- Add any global autocommands here
