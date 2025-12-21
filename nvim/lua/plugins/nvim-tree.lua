@@ -179,15 +179,8 @@ return {
 			},
 
 			diagnostics = {
-				enable = true,
-				show_on_dirs = true,
-				icons = {
-					hint = "",
-					info = "",
-					warning = "",
-					error = "",
-				},
-			},
+			enable = false,
+		},
 
 			actions = {
 				use_system_clipboard = true,

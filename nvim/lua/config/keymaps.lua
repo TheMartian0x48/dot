@@ -2,10 +2,6 @@
 -- Keymaps - All keybindings in one place
 -- ==========================================
 
--- Set leader key
-vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
-
 local map = vim.keymap.set
 
 -- ==========================================

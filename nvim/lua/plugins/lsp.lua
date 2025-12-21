@@ -16,6 +16,7 @@ return {
 					"gopls",
 					"templ",
 					"html",
+					"htmx",
 					"cssls",
 					"ts_ls",
 					"zls",
@@ -46,32 +47,38 @@ return {
 			}
 
 			vim.lsp.config.html = {
-				capabilities = capabilities,
-			}
+		capabilities = capabilities,
+		filetypes = { "html", "templ" },
+	}
 
-			vim.lsp.config.cssls = {
-				capabilities = capabilities,
-			}
+	vim.lsp.config.htmx = {
+		capabilities = capabilities,
+		filetypes = { "html", "templ" },
+	}
 
-			vim.lsp.config.ts_ls = {
-				capabilities = capabilities,
-			}
+	vim.lsp.config.cssls = {
+		capabilities = capabilities,
+	}
 
-			vim.lsp.config.zls = {
-				capabilities = capabilities,
-			}
+	vim.lsp.config.ts_ls = {
+		capabilities = capabilities,
+	}
 
-			vim.lsp.config.lua_ls = {
-				capabilities = capabilities,
-				settings = {
-					Lua = {
-						diagnostics = { globals = { "vim" } },
-					},
-				},
-			}
+	vim.lsp.config.zls = {
+		capabilities = capabilities,
+	}
 
-			-- Enable all configured servers
-			vim.lsp.enable({ "gopls", "templ", "html", "cssls", "ts_ls", "zls", "lua_ls" })
+	vim.lsp.config.lua_ls = {
+		capabilities = capabilities,
+		settings = {
+			Lua = {
+				diagnostics = { globals = { "vim" } },
+			},
+		},
+	}
+
+	-- Enable all configured servers
+	vim.lsp.enable({ "gopls", "templ", "html", "htmx", "cssls", "ts_ls", "zls", "lua_ls" })
 		end,
 	}
 }

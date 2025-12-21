@@ -30,17 +30,18 @@ return {
 					palette.bg_sidebar = "#000000"
 					palette.bg_float = "#000000"
 					palette.bg_popup = "#000000"
-					
 					-- Lighten gray colors for better readability on black background
-					palette.gray4 = "#8899AA"  -- Comments (was darker)
-					palette.gray3 = "#99AABB"  -- Lighter gray
-					palette.gray2 = "#AABBCC"  -- Even lighter
-					palette.comment = "#8899AA"  -- Ensure comments are lighter
-					
+					palette.gray4 = "#8899AA" -- Comments (was darker)
+					palette.gray3 = "#99AABB" -- Lighter gray
+					palette.gray2 = "#AABBCC" -- Even lighter
+					palette.comment = "#8899AA" -- Ensure comments are lighter
 					return palette
 				end,
 			})
 			require("nordic").load()
+
+			-- Override WinSeparator to remove background (thin line)
+			vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#3B4252", bg = "NONE" })
 		end,
 	},
 
