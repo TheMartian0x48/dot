@@ -14,586 +14,347 @@
 
 </div>
 
-## ✨ Features
+## Requirements
 
-- 🚀 **Lazy Loading** - Fast startup with lazy.nvim plugin manager
-- 🎯 **Modular Structure** - Organized plugins by functionality
-- 🛠️ **Full IDE Experience** - LSP, debugging, testing, and more
-- 🎨 **Beautiful UI** - Modern colorschemes and statusline
-- ⌨️ **Intuitive Keybindings** - Which-key for discoverability
-- 🔍 **Powerful Search** - Telescope for fuzzy finding everything
-- 🌳 **Smart Navigation** - File explorer and buffer management
-- 📝 **Enhanced Editing** - Autocompletion, snippets, and formatting
+- Neovim >= 0.9.0
+- Git
+- ripgrep (for telescope and spectre)
+- fd (for telescope file finding)
+- A Nerd Font (for icons)
 
-## 🚀 Quick Start
+## Plugin Manager
 
-This configuration is automatically installed with the main dotfiles setup:
+- **lazy.nvim** - Modern plugin manager with lazy loading
 
-```bash
-# If using the main dotfiles
-cd ~/.dotfiles && ./setup.sh
+## Plugins
 
-# Or install manually
-git clone https://github.com/yourusername/dot.git ~/.config/nvim
-nvim  # Will automatically install plugins on first run
-```
+### UI & Appearance
+- **nordic.nvim** - Colorscheme with pure black background
+- **lualine.nvim** - Statusline
+- **bufferline.nvim** - Buffer tabs
+- **nvim-web-devicons** - File icons
+- **dashboard-nvim** - Start screen
+- **dropbar.nvim** - Winbar with context
+- **which-key.nvim** - Keymap hints
 
-## 📦 Plugin Categories
+### File Management
+- **nvim-tree.lua** - File explorer
+- **telescope.nvim** - Fuzzy finder
 
-### 🔧 Core Functionality
-| Plugin | Purpose | Key Features |
-|--------|---------|--------------|
-| **lazy.nvim** | Plugin manager | Lazy loading, lockfile, profiling |
-| **which-key.nvim** | Key mapping guide | Interactive key discovery |
-| **telescope.nvim** | Fuzzy finder | Files, buffers, grep, LSP symbols |
-| **nvim-treesitter** | Syntax highlighting | Better parsing and highlighting |
-| **oil.nvim** | File operations | Directory editing as buffer |
+### Editor Enhancement
+- **nvim-treesitter** - Syntax highlighting and parsing
+- **nvim-cmp** - Autocompletion
+- **nvim-surround** - Surround text objects
+- **nvim-spectre** - Search and replace panel
+- **Comment.nvim** - Smart commenting (via editor.lua)
+- **render-markdown.nvim** - Markdown preview
 
-### 🎨 User Interface
-| Plugin | Purpose | Key Features |
-|--------|---------|--------------|
-| **nvim-tree.lua** | File explorer | Tree view, git integration |
-| **lualine.nvim** | Status line | Modern, customizable statusline |
-| **colorscheme** | Visual theme | Multiple themes support |
-| **nvim-web-devicons** | File icons | Beautiful file type icons |
+### LSP & Development
+- **nvim-lspconfig** - LSP configuration
+- **conform.nvim** - Code formatting
+- **trouble.nvim** - Better diagnostics UI
 
-### ✏️ Editor Enhancements
-| Plugin | Purpose | Key Features |
-|--------|---------|--------------|
-| **nvim-cmp** | Autocompletion | LSP, snippets, buffer completion |
-| **LuaSnip** | Snippet engine | Fast snippet expansion |
-| **trouble.nvim** | Diagnostics | Better error/warning display |
-| **mini.ai** | Text objects | Enhanced text object selection |
+### Git Integration
+- **gitsigns.nvim** - Git signs and hunks
 
-### 💻 Development Tools
-| Plugin | Purpose | Key Features |
-|--------|---------|--------------|
-| **nvim-lspconfig** | LSP client | Language server integration |
-| **mason.nvim** | LSP installer | Automatic LSP/tool installation |
-| **nvim-dap** | Debugging | Debug adapter protocol |
-| **gitsigns.nvim** | Git integration | Git hunks, blame, diff |
+### Terminal
+- **toggleterm.nvim** - Terminal management
 
-### 📝 Productivity
-| Plugin | Purpose | Key Features |
-|--------|---------|--------------|
-| **sticky-notes** | Quick notes | Persistent note-taking |
-| **toggleterm.nvim** | Terminal integration | Multiple terminals |
+### Session Management
+- **persistence.nvim** - Session auto-save/restore
 
-## 📁 Project Structure
+## Keymappings
+
+Leader key: `<Space>`
+Local leader: `\`
+
+### Basic Operations
 
 ```
-nvim/
-├── 📄 init.lua                   # Entry point
-├── 📄 lazy-lock.json             # Plugin version lockfile
-├── 📁 lua/
-│   ├── 📁 config/
-│   │   ├── options.lua           # Neovim options
-│   │   ├── lazy.lua              # Plugin manager setup
-│   │   └── filetypes.lua         # File type associations
-│   └── 📁 plugins/
-│       ├── 📁 core/              # Essential functionality
-│       │   ├── init.lua          # Core plugin loader
-│       │   ├── telescope.lua     # Fuzzy finder
-│       │   ├── which-key.lua     # Key mappings
-│       │   ├── treesitter.lua    # Syntax highlighting
-│       │   ├── navigation.lua    # Buffer/window navigation
-│       │   ├── terminal.lua      # Terminal integration
-│       │   └── fileops.lua       # File operations
-│       ├── 📁 ui/                # User interface
-│       │   ├── init.lua          # UI plugin loader
-│       │   ├── colorscheme.lua   # Color themes
-│       │   ├── statusline.lua    # Status bar
-│       │   ├── ntree.lua         # File explorer
-│       │   └── icon.lua          # File icons
-│       ├── 📁 editor/            # Editor enhancements
-│       │   ├── init.lua          # Editor plugin loader
-│       │   ├── autocomplete.lua  # Completion engine
-│       │   ├── trouble.lua       # Diagnostics
-│       │   └── miniai.lua        # Text objects
-│       ├── 📁 dev/               # Development tools
-│       │   ├── init.lua          # Dev plugin loader
-│       │   ├── lsp.lua           # Language servers
-│       │   ├── dap.lua           # Debugging
-│       │   ├── git.lua           # Git integration
-│       └── 📁 productivity/      # Productivity tools
-│           ├── init.lua          # Productivity loader
-│           └── stickynotes.lua   # Note-taking
-├── 📁 snippets/                  # Code snippets
-└── 📁 lang-servers/              # Language server configs
-    └── 📁 java/                  # Java-specific setup
+<leader>w → Save file
+<leader>q → Quit
+<leader>Q → Force quit
+<Esc>     → Clear search highlight
 ```
 
-## ⌨️ Key Mappings
-
-### Leader Key: `<Space>`
-
-<details>
-<summary><code>&lt;leader&gt;f</code> <strong>File Operations</strong></summary>
+### Window Management
 
 ```
-<leader>f
-├── f     → Find files
-├── d     → Find in directory
-├── b     → Find buffers
-├── g     → Find git files
-├── h     → Find help
-├── r     → Recent files
-│   ├── a → All recent files
-│   ├── p → Project recent
-│   └── s → Session recent
-├── s     → Search
-│   ├── l → Live grep
-│   ├── c → Grep with context
-│   └── w → Grep word
-├── n     → New
-│   ├── f → New file
-│   └── t → New from template
-└── o     → Operations
-    ├── r → Rename file
-    ├── d → Delete file
-    └── c → Copy file
-```
-</details>
+Navigation
+├── <C-h>      → Move left
+├── <C-j>      → Move down
+├── <C-k>      → Move up
+└── <C-l>      → Move right
 
-<details>
-<summary><code>&lt;leader&gt;b</code> <strong>Buffer Management</strong></summary>
+Resize
+├── <C-Up>     → Increase height
+├── <C-Down>   → Decrease height
+├── <C-Left>   → Decrease width
+└── <C-Right>  → Increase width
+```
+
+### Text Editing
+
+```
+Visual Mode
+├── J          → Move selection down
+└── K          → Move selection up
+```
+
+### Buffer Management
 
 ```
 <leader>b
-├── n     → Next buffer
-├── p     → Previous buffer
-├── d     → Delete buffer
-├── D     → Force delete buffer
-├── l     → List buffers
-├── b     → Buffer picker
-├── a     → Alternate buffer
-├── r     → Recent buffers
-├── q     → Smart close buffer
-├── 1-9   → Go to buffer 1-9
-└── 0     → Go to last buffer
+├── b          → Pick buffer
+├── f          → Fuzzy find buffer
+├── p          → Previous buffer
+├── d          → Delete buffer
+├── D          → Force delete buffer
+├── c          → Close other buffers
+├── C          → Close all buffers
+├── l          → Close buffers to left
+├── r          → Close buffers to right
+└── s
+    ├── e      → Sort by extension
+    ├── d      → Sort by directory
+    └── r      → Sort by relative path
 
-Navigation shortcuts:
-├── <Tab>   → Next buffer
-└── <S-Tab> → Previous buffer
+Navigation
+├── ]b         → Next buffer
+└── [b         → Previous buffer
+
+Movement
+├── >b         → Move buffer right
+└── <b         → Move buffer left
 ```
-</details>
 
-<details>
-<summary><code>&lt;leader&gt;w</code> <strong>Window Management</strong></summary>
-
-```
-<leader>w
-├── h     → Go to left window
-├── j     → Go to lower window
-├── k     → Go to upper window
-├── l     → Go to right window
-├── s     → Split window below
-├── v     → Split window right
-├── c     → Close window
-├── o     → Close other windows
-└── =     → Equalize window sizes
-
-Navigation & Resize:
-├── <C-h/j/k/l>      → Navigate splits
-├── <C-Up/Down>      → Resize height
-└── <C-Left/Right>   → Resize width
-```
-</details>
-
-<details>
-<summary><code>&lt;leader&gt;e</code> <strong>File Explorer</strong></summary>
+### File Explorer
 
 ```
 <leader>e
-├── e     → Toggle explorer
-├── f     → Focus explorer
-├── F     → Find current file
-├── r     → Refresh explorer
-├── c     → Collapse explorer
-└── o     → Open oil file manager
-
-Quick access:
-└── -     → Open parent directory
+├── e          → Toggle explorer
+└── f          → Find current file
 ```
-</details>
 
-<details>
-<summary><code>&lt;leader&gt;l</code> <strong>LSP Operations</strong></summary>
-
-```
-Go-to actions:
-├── gd    → Go to definition
-├── gD    → Go to declaration
-├── gr    → Go to references
-├── gi    → Go to implementations
-├── gt    → Go to type definitions
-└── K     → Show hover info
-
-<leader>l
-├── d     → Telescope definitions
-├── i     → Telescope implementations
-├── t     → Telescope type definitions
-├── s     → Document symbols
-├── f     → Format document
-├── a     → Code actions
-│   └── s → Source actions
-├── n     → Rename symbol
-├── h     → Hover documentation
-├── k     → Signature help
-├── x     → Extract
-│   ├── f → Extract function
-│   └── v → Extract variable
-├── c     → Call hierarchy
-│   ├── i → Incoming calls
-│   └── o → Outgoing calls
-├── w     → Workspace
-│   ├── s → Workspace symbols
-│   ├── a → Add workspace folder
-│   ├── r → Remove workspace folder
-│   └── x → Restart LSP
-└── m     → Diagnostics
-    ├── d → Show line diagnostics
-    ├── l → Buffer diagnostics
-    └── w → Workspace diagnostics
-```
-</details>
-
-<details>
-<summary><code>&lt;leader&gt;x</code> <strong>Diagnostics</strong></summary>
-
-```
-<leader>x
-├── x     → Toggle diagnostics
-├── X     → Buffer diagnostics
-├── L     → Location list
-├── Q     → Quickfix list
-├── n     → Next diagnostic
-└── p     → Previous diagnostic
-
-Navigation shortcuts:
-├── ]d    → Next diagnostic
-├── [d    → Previous diagnostic
-├── ]e    → Next error
-├── [e    → Previous error
-├── ]w    → Next warning
-└── [w    → Previous warning
-```
-</details>
-
-<details>
-<summary><code>&lt;leader&gt;g</code> <strong>Git Operations</strong></summary>
-
-```
-<leader>g
-├── g     → Git status (Neogit)
-├── c     → Git commits
-├── C     → Buffer commits
-├── b     → Branch operations
-│   ├── b → Branch checkout
-│   ├── c → Create branch
-│   ├── d → Delete branch
-│   ├── r → Rename branch
-│   ├── m → Merge branch
-│   └── l → List branches
-├── d     → Diff operations
-│   ├── b → Diff with branch
-│   ├── p → Diff with prev commit
-│   ├── c → Diff with commit
-│   ├── t → Diff two commits
-│   ├── f → Diff file (last commit)
-│   └── s → Diff staged changes
-├── h     → Hunk operations
-│   ├── p → Preview hunk
-│   ├── r → Reset hunk
-│   ├── s → Stage hunk
-│   ├── S → Stage buffer
-│   ├── u → Undo stage hunk
-│   ├── n → Next hunk
-│   └── N → Previous hunk
-├── l     → Log operations
-│   ├── l → Interactive log
-│   ├── f → File history
-│   └── c → Current file history
-├── z     → Stash operations
-│   ├── l → List stashes
-│   ├── s → Quick stash
-│   ├── a → Apply stash
-│   └── p → Pop stash
-├── x     → Extended operations
-│   ├── c → Smart commit
-│   ├── a → Amend commit
-│   ├── p → Push with options
-│   └── P → Pull with options
-├── B     → Blame line (full)
-└── t     → Toggle blame
-```
-</details>
-
-<details>
-<summary><code>&lt;leader&gt;s</code> <strong>Search Operations</strong></summary>
-
-```
-<leader>s
-├── f     → Search files (smart)
-├── g     → Search grep
-├── w     → Search word under cursor
-├── b     → Search buffers
-├── h     → Search help
-├── r     → Search recent
-├── c     → Search colorschemes
-├── k     → Search keymaps
-├── m     → Search marks
-├── j     → Search jumplist
-├── q     → Search quickfix
-└── l     → Search location list
-
-Navigation shortcuts:
-├── n/N       → Next/previous search (centered)
-├── */#       → Search word forward/backward (centered)
-└── g*/g#     → Search partial forward/backward (centered)
-```
-</details>
-
-<details>
-<summary><code>&lt;leader&gt;d</code> <strong>Debug Operations</strong></summary>
-
-```
-<leader>d
-├── b     → Toggle breakpoint
-├── B     → Conditional breakpoint
-├── c     → Continue
-├── i     → Step into
-├── o     → Step over
-├── O     → Step out
-├── r     → Toggle REPL
-├── u     → Toggle UI
-├── t     → Terminate
-└── l     → Run last
-
-Function keys:
-├── <F8>  → Continue
-├── <F9>  → Step into
-├── <F10> → Step over
-└── <F11> → Step out
-```
-</details>
-
-<details>
-<summary><code>&lt;leader&gt;t</code> <strong>Terminal Operations</strong></summary>
+### Terminal
 
 ```
 <leader>t
-├── t     → Toggle terminal
-├── h     → Horizontal terminal
-├── v     → Vertical terminal
-├── a     → Toggle all terminals
-├── m     → Terminal management
-│   ├── 1-4 → Terminal 1-4
-│   └── s   → Select terminal
-├── s     → System tools
-│   ├── h → Htop
-│   ├── b → Btop
-│   └── d → Disk usage (ncdu)
-├── d     → Development REPLs
-│   ├── p → Python REPL
-│   └── b → Bpython
-├── f     → Enhanced float terminal
-├── c     → Custom command
-├── u     → Utilities
-│   ├── j → Jq (JSON processor)
-│   ├── y → Yq (YAML processor)
-│   ├── r → Ripgrep
-│   └── b → Bat (enhanced cat)
-└── w     → Web tools
-    ├── c → Curl
-    └── h → HTTPie
+├── f          → Float terminal
+├── h          → Horizontal terminal
+├── v          → Vertical terminal
+└── l          → Toggle Lazygit
 
-Terminal mode:
-└── <Esc><Esc> → Exit terminal mode
+Terminal Mode
+├── <C-h/j/k/l> → Navigate windows
+└── <Esc>       → Exit terminal mode
 ```
-</details>
 
-<details>
-<summary><code>&lt;leader&gt;q</code> <strong>Quick Actions</strong></summary>
+### Search & Replace (Telescope)
+
+```
+<leader>s
+├── <CR>       → Resume previous search
+├── f          → Find files
+├── F          → Find files (hidden)
+├── g          → Git tracked files
+├── o          → Recent files
+├── w          → Word at cursor
+├── /          → Live grep
+├── G          → Live grep (hidden)
+├── l          → Lines in buffer
+├── k          → Keymaps
+├── h          → Help tags
+├── m          → Man pages
+├── c          → Commands
+├── '          → Marks
+├── r          → Registers
+├── n          → Notifications
+└── s          → Colorschemes
+```
+
+### Search & Replace (Spectre)
+
+```
+<leader>r
+├── r          → Open Spectre panel
+├── w          → Replace current word (Normal mode)
+├── w          → Replace selection (Visual mode)
+└── f          → Replace in current file
+
+In-Panel Keymaps
+├── dd         → Toggle current item
+├── <CR>       → Go to file
+├── R          → Replace current line
+├── <leader>R  → Replace all matches
+├── Q          → Send to quickfix
+├── ?          → Show options
+├── V          → Change view mode
+└── t
+    ├── u      → Toggle auto-update
+    ├── i      → Toggle ignore case
+    └── h      → Toggle hidden files
+```
+
+### Git Operations
+
+```
+<leader>g
+├── j          → Next hunk
+├── k          → Prev hunk
+├── p          → Preview hunk
+├── s          → Stage hunk
+├── u          → Undo stage hunk
+├── S          → Stage buffer
+├── r          → Reset hunk
+├── R          → Reset buffer
+├── b          → Blame line
+├── B          → Toggle blame line
+├── d          → Diff this
+└── D          → Toggle deleted
+
+Navigation
+├── ]h         → Next hunk
+└── [h         → Prev hunk
+```
+
+### LSP
+
+```
+<leader>l
+├── i          → LSP info
+├── d          → Line diagnostics
+├── D          → All diagnostics
+├── h          → Signature help
+├── r          → Rename
+├── a          → Code action
+├── A          → Source action
+├── f          → Format document
+├── s          → Document symbols
+├── G          → Workspace symbols
+└── R          → References
+
+Navigation
+├── gD         → Go to declaration
+├── gd         → Go to definition
+├── gy         → Go to type definition
+├── gri        → Go to implementation
+├── grr        → References
+├── gO         → Document outline
+
+Actions
+├── K          → Hover documentation
+├── grn        → Rename
+├── gra        → Code action
+
+Diagnostics
+├── ]d         → Next diagnostic
+├── [d         → Prev diagnostic
+├── ]e         → Next error
+├── [e         → Prev error
+├── ]w         → Next warning
+├── [w         → Prev warning
+└── gl         → Line diagnostics
+
+Workspace
+<leader>w
+├── a          → Add workspace folder
+├── r          → Remove workspace folder
+└── l          → List workspace folders
+```
+
+### Diagnostics (Trouble)
+
+```
+<leader>x
+├── x          → Diagnostics (Trouble)
+├── X          → Buffer diagnostics (Trouble)
+├── L          → Location list (Trouble)
+├── Q          → Quickfix list (Trouble)
+├── q          → Open quickfix
+└── l          → Open location list
+
+<leader>c
+├── s          → Symbols (Trouble)
+└── l          → LSP definitions/references (Trouble)
+```
+
+### Session Management
 
 ```
 <leader>q
-├── q     → Quit all
-├── w     → Save and quit all
-└── f     → Force quit all
-
-General shortcuts:
-├── <C-s>     → Save file
-├── <leader>h → Clear search highlight
-├── <Esc>     → Clear search & redraw
-├── <C-d>     → Smart scroll down & center
-├── <C-u>     → Smart scroll up & center
-├── <C-o>     → Jump back (centered)
-├── <C-i>     → Jump forward (centered)
-├── gg        → Go to top (centered)
-├── G         → Go to bottom (centered)
-└── {/}       → Previous/next paragraph (centered)
+├── s          → Restore session
+├── l          → Restore last session
+└── d          → Don't save current session
 ```
-</details>
 
-<details>
-<summary><code>&lt;leader&gt;u</code> <strong>Utility & Configuration</strong></summary>
+### UI Toggles
 
 ```
 <leader>u
-├── l     → Lazy plugin manager
-├── m     → Mason LSP manager
-├── c     → Edit config
-├── r     → Reload config
-├── i     → Install plugins
-├── s     → Sync plugins
-├── u     → Update plugins
-└── p     → Profile plugins
-
-<leader>c
-└── s     → Select colorscheme
-```
-</details>
-
-<details>
-<summary><code>&lt;leader&gt;o</code> <strong>Toggle Options</strong></summary>
-
-```
-<leader>o
-├── n     → Toggle line numbers
-├── r     → Toggle relative numbers
-├── w     → Toggle line wrap
-├── s     → Toggle spell check
-├── l     → Toggle listchars
-├── c     → Toggle cursor line
-├── h     → Toggle search highlight
-└── f     → Toggle folding
-```
-</details>
-
-<details>
-<summary><code>&lt;leader&gt;z</code> <strong>Zen Mode</strong></summary>
-
-```
-<leader>z
-├── z     → Zen mode
-└── t     → Twilight
-```
-</details>
-
-<details>
-<summary><code>&lt;leader&gt;S</code> <strong>Session Management</strong></summary>
-
-```
-<leader>S
-├── s     → Save session
-├── r     → Restore session
-└── d     → Delete session
-```
-</details>
-
-<details>
-<summary><code>&lt;leader&gt;v</code> <strong>View Control</strong></summary>
-
-```
-<leader>v
-├── t     → Scroll to top
-├── c     → Center screen
-└── b     → Scroll to bottom
-```
-</details>
-
-<details>
-<summary><code>Visual</code> <strong>Visual Mode Mappings</strong></summary>
-
-```
-Visual mode specific:
-├── <leader>ghs → Stage hunk
-├── <leader>ghr → Reset hunk
-├── <leader>la  → Code actions
-├── <leader>lf  → Format selection
-├── <leader>sg  → Search selection
-├── </>         → Indent/unindent (keep selection)
-└── J/K         → Move selection up/down
-```
-</details>
-
-<details>
-<summary><code>Insert</code> <strong>Insert Mode Mappings</strong></summary>
-
-```
-Insert mode specific:
-├── jk/kj       → Escape
-├── <C-h/j/k/l> → Navigate in insert mode
-├── <C-a>       → Go to beginning of line
-├── <C-e>       → Go to end of line
-├── <C-d>       → Delete character
-└── <C-k>       → Signature help
-```
-</details>
-
-
-## 🔍 Troubleshooting
-
-### Common Issues
-
-**LSP not working:**
-```bash
-# Check if language server is installed
-:Mason
-# Or check LSP info
-:LspInfo
+├── d          → Toggle diagnostics
+├── D          → Dismiss notifications
+├── v          → Toggle diagnostic virtual text
+├── f          → Toggle autoformat (buffer)
+├── F          → Toggle autoformat (global)
+├── w          → Toggle line wrap
+├── n          → Cycle line numbering
+├── h          → Toggle inlay hints
+├── s          → Toggle spellcheck
+├── b          → Toggle background (dark/light)
+├── g          → Toggle signcolumn
+├── l          → Toggle statusline
+└── t          → Toggle tabline
 ```
 
-**Slow startup:**
-```bash
-# Profile plugin loading
-nvim --startuptime startup.log
-# Or use lazy.nvim profiler
-:Lazy profile
+### Quickfix & Location Lists
+
+```
+Quickfix
+├── ]q         → Next item
+├── [q         → Prev item
+├── ]Q         → Last item
+└── [Q         → First item
+
+Location List
+├── ]l         → Next item
+├── [l         → Prev item
+├── ]L         → Last item
+└── [L         → First item
 ```
 
-**Treesitter errors:**
-```bash
-# Update parsers
-:TSUpdate
-# Or install specific parser
-:TSInstall lua python javascript
+## Configuration Structure
+
 ```
-
-**Plugin not loading:**
-```bash
-# Check lazy.nvim status
-:Lazy
-# Force reload plugin
-:Lazy reload plugin-name
+nvim/
+├── init.lua                    # Entry point
+├── lua/
+│   ├── config/
+│   │   └── keymaps.lua        # All keymappings
+│   └── plugins/               # Plugin configurations
+│       ├── bufferline.lua
+│       ├── cmp.lua
+│       ├── colorscheme.lua
+│       ├── dashboard.lua
+│       ├── devicons.lua
+│       ├── dropbar.lua
+│       ├── editor.lua
+│       ├── formatting.lua
+│       ├── gitsigns.lua
+│       ├── lsp.lua
+│       ├── lualine.lua
+│       ├── nvim-tree.lua
+│       ├── persistence.lua
+│       ├── render-markdown.lua
+│       ├── spectre.lua
+│       ├── surround.lua
+│       ├── telescope.lua
+│       ├── toggleterm.lua
+│       ├── treesitter.lua
+│       ├── trouble.lua
+│       └── which-key.lua
+└── lazy-lock.json             # Plugin version lock
 ```
-
-## 📚 Learning Resources
-
-### Neovim
-- [Neovim Documentation](https://neovim.io/doc/)
-- [Learn Vim the Hard Way](https://learnvimscriptthehardway.stevelosh.com/)
-- [Vim Adventures](https://vim-adventures.com/) - Interactive Vim tutorial
-
-### Lua in Neovim
-- [Lua Guide for Neovim](https://github.com/nanotee/nvim-lua-guide)
-- [lua-users wiki](http://lua-users.org/wiki/)
-
-### Plugin Development
-- [lazy.nvim Documentation](https://github.com/folke/lazy.nvim)
-- [Neovim Plugin Template](https://github.com/nvim-lua/nvim-lua-plugin-template)
-
-## 📝 License
-
-This Neovim configuration is part of the main dotfiles project and is licensed under the MIT License.
-
-## 🙏 Acknowledgments
-
-- **Neovim Team** - For the amazing editor
-- **Plugin Authors** - For their incredible work
-- **Community** - For sharing knowledge and configurations
-- **lazy.nvim** - For making plugin management a breeze
 
 ---
 

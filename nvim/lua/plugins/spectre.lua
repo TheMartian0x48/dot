@@ -1,42 +1,8 @@
 return {
 	"nvim-pack/nvim-spectre",
-	dependencies = { "nvim-lua/plenary.nvim" },
+	commit = "72f56f7",
+	dependencies = { { "nvim-lua/plenary.nvim", commit = "b9fd522" } },
 	cmd = "Spectre",
-	keys = {
-		-- Open Spectre (Search & Replace Panel)
-		{
-			"<leader>rr",
-			function()
-				require("spectre").open()
-			end,
-			desc = "Replace in Files (Spectre)",
-		},
-		-- Search current word
-		{
-			"<leader>rw",
-			function()
-				require("spectre").open_visual({ select_word = true })
-			end,
-			desc = "Replace Current Word (Spectre)",
-		},
-		-- Search in current file
-		{
-			"<leader>rf",
-			function()
-				require("spectre").open_file_search()
-			end,
-			desc = "Replace in Current File (Spectre)",
-		},
-		-- Visual mode: search selected text
-		{
-			"<leader>rw",
-			function()
-				require("spectre").open_visual()
-			end,
-			mode = "v",
-			desc = "Replace Selection (Spectre)",
-		},
-	},
 	opts = {
 		open_cmd = "vnew",
 		live_update = false, -- auto execute search again when you write any file

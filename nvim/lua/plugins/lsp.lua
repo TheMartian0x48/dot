@@ -1,84 +1,95 @@
 return {
-	{
-		"neovim/nvim-lspconfig",
-		dependencies = {
-			"williamboman/mason.nvim",
-			"williamboman/mason-lspconfig.nvim",
-			"hrsh7th/cmp-nvim-lsp",
-		},
-		config = function()
-			-- 1. Setup Mason
-			require("mason").setup()
+    {
+        "neovim/nvim-lspconfig",
+        version = "v2.6.0",
+        dependencies = {
+            { "williamboman/mason.nvim", version = "v2.2.1" },
+            { "williamboman/mason-lspconfig.nvim", version = "v2.1.0" },
+            { "hrsh7th/cmp-nvim-lsp", commit = "cbc7b02" },
+        },
+        config = function()
+            -- 1. Setup Mason
+            require("mason").setup()
 
-			-- 2. Setup Mason LSPConfig
-			require("mason-lspconfig").setup({
-				ensure_installed = {
-					"gopls",
-					"templ",
-					"html",
-					"htmx",
-					"cssls",
-					"ts_ls",
-					"zls",
-					"lua_ls",
-				},
-				automatic_installation = true,
-			})
+            -- 2. Setup Mason LSPConfig
+            require("mason-lspconfig").setup({
+                ensure_installed = {
+                    "gopls",
+                    "html",
+                    "cssls",
+                    "lua_ls",
+                    "ts_ls",
+                    "pyright",
+                    "templ",
+                },
+                automatic_installation = true,
+            })
 
-			-- 3. Setup LSP using modern vim.lsp.config API (Neovim 0.11+)
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+            -- 3. Setup LSP using modern vim.lsp.config API (Neovim 0.11+)
+            local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-			-- Configure each server using vim.lsp.config
-			vim.lsp.config.gopls = {
-				capabilities = capabilities,
-				settings = {
-					gopls = {
-						completeUnimported = true,
-						usePlaceholders = true,
-						analyses = {
-							unusedparams = true,
-						},
-					},
-				},
-			}
+            -- Go
+            vim.lsp.config.gopls = {
+                capabilities = capabilities,
+                settings = {
+                    gopls = {
+                        completeUnimported = true,
+                        usePlaceholders = true,
+                        analyses = {
+                            unusedparams = true,
+                        },
+                    },
+                },
+            }
 
-			vim.lsp.config.templ = {
-				capabilities = capabilities,
-			}
+            -- TypeScript/JavaScript
+            vim.lsp.config.ts_ls = {
+                capabilities = capabilities,
+                filetypes = { "javascript", "typescript" },
+            }
 
-			vim.lsp.config.html = {
-		capabilities = capabilities,
-		filetypes = { "html", "templ" },
-	}
+            -- Python
+            vim.lsp.config.pyright = {
+                capabilities = capabilities,
+                settings = {
+                    python = {
+                        analysis = {
+                            autoSearchPaths = true,
+                            useLibraryCodeForTypes = true,
+                            diagnosticMode = "workspace",
+                        },
+                    },
+                },
+            }
 
-	vim.lsp.config.htmx = {
-		capabilities = capabilities,
-		filetypes = { "html", "templ" },
-	}
+            -- HTML
+            vim.lsp.config.html = {
+                capabilities = capabilities,
+                filetypes = { "html" },
+            }
 
-	vim.lsp.config.cssls = {
-		capabilities = capabilities,
-	}
+            -- CSS
+            vim.lsp.config.cssls = {
+                capabilities = capabilities,
+            }
 
-	vim.lsp.config.ts_ls = {
-		capabilities = capabilities,
-	}
+            -- Lua
+            vim.lsp.config.lua_ls = {
+                capabilities = capabilities,
+                settings = {
+                    Lua = {
+                        diagnostics = { globals = { "vim" } },
+                    },
+                },
+            }
 
-	vim.lsp.config.zls = {
-		capabilities = capabilities,
-	}
+            -- Templ
+            vim.lsp.config.templ = {
+                capabilities = capabilities,
+            }
 
-	vim.lsp.config.lua_ls = {
-		capabilities = capabilities,
-		settings = {
-			Lua = {
-				diagnostics = { globals = { "vim" } },
-			},
-		},
-	}
-
-	-- Enable all configured servers
-	vim.lsp.enable({ "gopls", "templ", "html", "htmx", "cssls", "ts_ls", "zls", "lua_ls" })
-		end,
-	}
+            -- Enable all configured servers
+            vim.lsp.enable({ "gopls", "ts_ls", "pyright", "html", "cssls", "lua_ls", "templ" })
+        end,
+    }
 }

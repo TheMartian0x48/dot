@@ -1,9 +1,9 @@
 [user]
-    email = a@a
+    email = cr7.aditya.cs@gmail.com
     name = Aditya Kumar Singh
 
 [credential]
-        helper = cache --timeout=604800
+	helper = cache --timeout=604800
 
 [core]
     editor = nvim

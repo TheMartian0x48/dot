@@ -47,3 +47,4 @@ if (which starship | is-not-empty) {
     mkdir ~/.cache/starship
     starship init nu | save -f ~/.cache/starship/init.nu
 }
+source $"($nu.home-path)/.cargo/env.nu"

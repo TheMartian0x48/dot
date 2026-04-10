@@ -1,6 +1,6 @@
 return {
 	'akinsho/toggleterm.nvim',
-	version = "*",
+	version = "v2.13.1",
 	opts = {
 		size = function(term)
 			if term.direction == "horizontal" then
@@ -58,8 +58,5 @@ return {
 		function _lazygit_toggle()
 			lazygit:toggle()
 		end
-
-		-- Set keymaps
-		vim.api.nvim_set_keymap("n", "<leader>tl", "<cmd>lua _lazygit_toggle()<CR>", {noremap = true, silent = true, desc = "Toggle Lazygit"})
 	end,
 }

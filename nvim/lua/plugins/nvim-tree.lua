@@ -1,6 +1,7 @@
 return {
 	"nvim-tree/nvim-tree.lua",
-	dependencies = { "nvim-tree/nvim-web-devicons" },
+	version = "v1.15.0",
+	dependencies = { { "nvim-tree/nvim-web-devicons", commit = "746ffbb" } },
 	cmd = { "NvimTreeToggle", "NvimTreeFocus", "NvimTreeFindFile" },
 	config = function()
 		-- Custom keymaps for nvim-tree

@@ -1,24 +1,13 @@
 return {
 	"stevearc/conform.nvim",
+	version = "v9.1.0",
 	event = { "BufWritePre" },
 	cmd = { "ConformInfo" },
 	opts = {
 		formatters_by_ft = {
 			lua = { "stylua" },
-			go = { "goimports", "gofmt" },
-			javascript = { "prettier" },
-			typescript = { "prettier" },
-			javascriptreact = { "prettier" },
-			typescriptreact = { "prettier" },
-			svelte = { "prettier" },
-			css = { "prettier" },
-			html = { "prettier" },
-			json = { "prettier" },
-			yaml = { "prettier" },
-			markdown = { "prettier" },
-			graphql = { "prettier" },
-            zig = { "zigfmt" },
-            templ = { "templ" },
+			go = { "goimports" },
+			templ = { "templ" },
 		},
 		format_on_save = function(bufnr)
 			-- Disable with a global or buffer-local variable

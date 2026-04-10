@@ -33,13 +33,19 @@ map("n", "<C-Right>", "<cmd>vertical resize +2<CR>", { desc = "Increase Window W
 map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move text down" })
 map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move text up" })
 
+-- Search visual selection with /
+map("v", "/", function()
+	local text = require("config.utils").get_visual_selection()
+	vim.fn.feedkeys("/" .. vim.fn.escape(text, "/\\") .. "\n", "n")
+end, { desc = "Search selection" })
+
 -- ==========================================
--- Terminal (Toggleterm)
+-- Terminal (Toggleterm) - using ; prefix to avoid conflicts with tests
 -- ==========================================
-map("n", "<leader>tf", "<cmd>ToggleTerm direction=float<CR>", { desc = "Float terminal" })
-map("n", "<leader>th", "<cmd>ToggleTerm direction=horizontal<CR>", { desc = "Horizontal terminal" })
-map("n", "<leader>tv", "<cmd>ToggleTerm direction=vertical<CR>", { desc = "Vertical terminal" })
-map("n", "<leader>tl", "<cmd>lua _lazygit_toggle()<CR>", { desc = "Toggle Lazygit" })
+map("n", "<leader>;f", "<cmd>ToggleTerm direction=float<CR>", { desc = "Float terminal" })
+map("n", "<leader>;h", "<cmd>ToggleTerm direction=horizontal<CR>", { desc = "Horizontal terminal" })
+map("n", "<leader>;v", "<cmd>ToggleTerm direction=vertical<CR>", { desc = "Vertical terminal" })
+map("n", "<leader>;l", "<cmd>lua _lazygit_toggle()<CR>", { desc = "Toggle Lazygit" })
 
 -- Terminal mode mappings
 map("t", "<C-h>", "<cmd>wincmd h<CR>", { desc = "Move to left window" })
@@ -225,19 +231,35 @@ map("n", "<leader>gd", "<cmd>Gitsigns diffthis<CR>", { desc = "Diff this" })
 map("n", "<leader>gD", "<cmd>Gitsigns toggle_deleted<CR>", { desc = "Toggle deleted" })
 
 -- ==========================================
+-- Diffview (Git Diffs) - using gv to avoid conflict with gitsigns gd
+-- ==========================================
+map("n", "<leader>gv", "<cmd>DiffviewOpen<cr>", { desc = "Open Diffview" })
+map("n", "<leader>gh", "<cmd>DiffviewFileHistory %<cr>", { desc = "File History" })
+map("n", "<leader>gH", "<cmd>DiffviewFileHistory<cr>", { desc = "Branch History" })
+map("n", "<leader>gx", "<cmd>DiffviewClose<cr>", { desc = "Close Diffview" })
+
+-- ==========================================
 -- Telescope (Fuzzy Finder)
 -- ==========================================
 -- Files & Buffers
 map("n", "<leader>s<CR>", "<cmd>Telescope resume<CR>", { desc = "Resume Previous Search" })
-map("n", "<leader>sf", "<cmd>Telescope find_files<CR>", { desc = "Find Files" })
+map("n", "<leader>sf", "<cmd>Telescope find_files no_ignore=true<CR>", { desc = "Find Files" })
 map("n", "<leader>sF", "<cmd>Telescope find_files hidden=true no_ignore=true<CR>", { desc = "Find Files (Hidden)" })
 map("n", "<leader>sg", "<cmd>Telescope git_files<CR>", { desc = "Git Tracked Files" })
 map("n", "<leader>so", "<cmd>Telescope oldfiles<CR>", { desc = "Recent Files" })
 
 -- Search & Grep
 map("n", "<leader>sw", "<cmd>Telescope grep_string<CR>", { desc = "Word at Cursor" })
+map("v", "<leader>sw", function()
+	local text = require("config.utils").get_visual_selection()
+	require("telescope.builtin").grep_string({ search = text })
+end, { desc = "Grep Selection" })
 map("n", "<leader>s/", "<cmd>Telescope live_grep<CR>", { desc = "Live Grep" })
 map("n", "<leader>sG", "<cmd>Telescope live_grep additional_args={'--hidden','--no-ignore'}<CR>", { desc = "Live Grep (Hidden)" })
+map("n", "<leader>sd", function() require("config.utils").grep_in_directory() end, { desc = "Grep in Directory" })
+map("n", "<leader>sD", function() require("config.utils").find_in_directory() end, { desc = "Find Files in Directory" })
+map("n", "<leader>sW", function() require("config.utils").grep_word_in_directory() end, { desc = "Word at Cursor in Directory" })
+map("v", "<leader>sW", function() require("config.utils").grep_selection_in_directory() end, { desc = "Grep Selection in Directory" })
 map("n", "<leader>sl", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "Lines in Buffer" })
 
 -- Vim Helpers
@@ -316,3 +338,41 @@ vim.api.nvim_create_autocmd('LspAttach', {
 	end,
 })
 
+-- ==========================================
+-- Debug (DAP)
+-- ==========================================
+map("n", "<leader>db", function() require("dap").toggle_breakpoint() end, { desc = "Toggle Breakpoint" })
+map("n", "<leader>dB", function() require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: ")) end, { desc = "Conditional Breakpoint" })
+map("n", "<leader>dc", function() require("dap").continue() end, { desc = "Continue" })
+map("n", "<leader>di", function() require("dap").step_into() end, { desc = "Step Into" })
+map("n", "<leader>do", function() require("dap").step_over() end, { desc = "Step Over" })
+map("n", "<leader>dO", function() require("dap").step_out() end, { desc = "Step Out" })
+map("n", "<leader>dr", function() require("dap").repl.toggle() end, { desc = "Toggle REPL" })
+map("n", "<leader>dl", function() require("dap").run_last() end, { desc = "Run Last" })
+map("n", "<leader>dx", function() require("dap").terminate() end, { desc = "Terminate" })
+map("n", "<leader>du", function() require("dapui").toggle() end, { desc = "Toggle DAP UI" })
+
+-- ==========================================
+-- Testing (Neotest)
+-- ==========================================
+map("n", "<leader>tt", function() require("neotest").run.run() end, { desc = "Run Nearest Test" })
+map("n", "<leader>tf", function() require("neotest").run.run(vim.fn.expand("%")) end, { desc = "Run File Tests" })
+map("n", "<leader>ta", function() require("neotest").run.run(vim.fn.getcwd()) end, { desc = "Run All Tests" })
+map("n", "<leader>ts", function() require("neotest").summary.toggle() end, { desc = "Toggle Test Summary" })
+map("n", "<leader>to", function() require("neotest").output.open({ enter = true }) end, { desc = "Show Test Output" })
+map("n", "<leader>tO", function() require("neotest").output_panel.toggle() end, { desc = "Toggle Output Panel" })
+map("n", "<leader>tx", function() require("neotest").run.stop() end, { desc = "Stop Test" })
+map("n", "<leader>td", function() require("neotest").run.run({ strategy = "dap" }) end, { desc = "Debug Nearest Test" })
+
+-- ==========================================
+-- Code Outline
+-- ==========================================
+map("n", "<leader>co", "<cmd>Outline<cr>", { desc = "Toggle Outline" })
+
+-- ==========================================
+-- Search & Replace (Spectre)
+-- ==========================================
+map("n", "<leader>rr", function() require("spectre").open() end, { desc = "Replace in Files (Spectre)" })
+map("n", "<leader>rw", function() require("spectre").open_visual({ select_word = true }) end, { desc = "Replace Current Word" })
+map("n", "<leader>rf", function() require("spectre").open_file_search() end, { desc = "Replace in Current File" })
+map("v", "<leader>rw", function() require("spectre").open_visual() end, { desc = "Replace Selection" })

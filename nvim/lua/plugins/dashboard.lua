@@ -1,5 +1,6 @@
 return {
 	'nvimdev/dashboard-nvim',
+	commit = "0775e56",
 	event = 'VimEnter',
 	config = function()
 		require('dashboard').setup {
@@ -34,5 +35,5 @@ return {
 			},
 		}
 	end,
-	dependencies = { 'nvim-tree/nvim-web-devicons' }
+	dependencies = { { 'nvim-tree/nvim-web-devicons', commit = "746ffbb" } }
 }

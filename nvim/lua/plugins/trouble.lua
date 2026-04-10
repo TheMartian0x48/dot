@@ -1,6 +1,7 @@
 return {
 	"folke/trouble.nvim",
-	dependencies = { "nvim-tree/nvim-web-devicons" },
+	version = "v3.7.1",
+	dependencies = { { "nvim-tree/nvim-web-devicons", commit = "746ffbb" } },
 	cmd = "Trouble",
 	opts = {
 		modes = {

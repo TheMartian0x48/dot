@@ -1,5 +1,6 @@
 return {
 	"lewis6991/gitsigns.nvim",
+	version = "v2.0.0",
 	event = { "BufReadPre", "BufNewFile" },
 	opts = {
 		signs = {

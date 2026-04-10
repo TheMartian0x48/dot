@@ -1,6 +1,7 @@
 return {
 	"nvim-lualine/lualine.nvim",
-	dependencies = { "nvim-tree/nvim-web-devicons" },
+	commit = "47f91c4",
+	dependencies = { { "nvim-tree/nvim-web-devicons", commit = "746ffbb" } },
 	event = "VeryLazy",
 	opts = {
 		options = {

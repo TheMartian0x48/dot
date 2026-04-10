@@ -1,6 +1,6 @@
 return {
 	"kylechui/nvim-surround",
-	version = "*",
+	version = "v4.0.3",
 	event = "VeryLazy",
 	opts = {
 		-- Default keymaps:

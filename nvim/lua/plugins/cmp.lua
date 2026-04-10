@@ -1,17 +1,19 @@
 return {
 	{
 		"hrsh7th/nvim-cmp",
+		version = "v0.0.2",
 		dependencies = {
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
-			"hrsh7th/cmp-cmdline",
+			{ "hrsh7th/cmp-nvim-lsp", commit = "cbc7b02" },
+			{ "hrsh7th/cmp-buffer", commit = "b74fab3" },
+			{ "hrsh7th/cmp-path", commit = "c642487" },
+			{ "hrsh7th/cmp-cmdline", commit = "d126061" },
 			{
 				"L3MON4D3/LuaSnip",
-				dependencies = { "rafamadriz/friendly-snippets" },
+				version = "v2.4.1",
+				dependencies = { { "rafamadriz/friendly-snippets", commit = "6cd7280" } },
 				build = "make install_jsregexp",
 			},
-			"saadparwaiz1/cmp_luasnip",
+			{ "saadparwaiz1/cmp_luasnip", commit = "98d9cb5" },
 		},
 		config = function()
 			local cmp = require("cmp")
